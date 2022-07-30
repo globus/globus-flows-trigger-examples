@@ -1,0 +1,94 @@
+{
+    "flow_definition": {
+        "Comment": "Transfer files using Globus Transfer",
+        "StartAt": "TransferFiles",
+        "States": {
+            "TransferFiles": {
+                "Comment": "Transfer a file or directory",
+                "Type": "Action",
+                "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+                "Parameters": {
+                    "source_endpoint_id.$": "$.input.source.id",
+                    "destination_endpoint_id.$": "$.input.destination.id",
+                    "transfer_items": [
+                        {
+                            "source_path.$": "$.input.source.path",
+                            "destination_path.$": "$.input.destination.path",
+                            "recursive.$": "$.input.recursive_tx"
+                        }
+                    ]
+                },
+                "ResultPath": "$.TransferFiles",
+                "WaitTime": 60,
+                "End": True
+            },
+        }
+    },
+    "input_schema": {
+        "required": [
+            "input"
+        ],
+        "properties": {
+            "input": {
+                "type": "object",
+                "required": [
+                    "source",
+                    "destination",
+                    "recursive_tx"
+                ],
+                "properties": {
+                    "source": {
+                        "type": "object",
+                        "title": "Select source collection and path",
+                        "description": "The source collection and path (path MUST end with a slash)",
+                        "format": "globus-collection",
+                        "required": [
+                            "id",
+                            "path"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "format": "uuid",
+                            },
+                            "path": {
+                                "type": "string",
+                            }
+                        },
+                        "additionalProperties": False
+                    },
+                    "destination": {
+                        "type": "object",
+                        "title": "Select destination collection and path",
+                        "description": "The destination collection and path (path MUST end with a slash); default collection is 'Globus Tutorials on ALCF Eagle'",
+                        "format": "globus-collection",
+                        "required": [
+                            "id",
+                            "path"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "default": "a6f165fa-aee2-4fe5-95f3-97429c28bf82"
+                            },
+                            "path": {
+                                "type": "string",
+                                "default": "/tutorials/USERNAME/"
+                            }
+                        },
+                        "additionalProperties": False
+                    },
+                    "recursive_tx": {
+                        "type": "boolean",
+                        "title": "Recursive transfer",
+                        "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
+                        "default": True,
+                    }
+                },
+                "additionalProperties": False
+            }
+        },
+        "additionalProperties": False
+    }
+}

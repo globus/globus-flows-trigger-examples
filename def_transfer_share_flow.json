@@ -1,0 +1,128 @@
+{
+    "flow_definition": {
+        "Comment": "Transfer files to a guest collection and set access permissions",
+        "StartAt": "TransferFiles",
+        "States": {
+            "TransferFiles": {
+                "Comment": "Transfer to a guest collection",
+                "Type": "Action",
+                "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+                "Parameters": {
+                    "source_endpoint_id.$": "$.input.source.id",
+                    "destination_endpoint_id.$": "$.input.destination.id",
+                    "transfer_items": [
+                        {
+                            "source_path.$": "$.input.source.path",
+                            "destination_path.$": "$.input.destination.path",
+                            "recursive.$": "$.input.recursive_tx"
+                        }
+                    ]
+                },
+                "ResultPath": "$.TransferFiles",
+                "WaitTime": 60,
+                "Next": "SetPermission",
+            },
+            "SetPermission": {
+                "Comment": "Grant read permission on the data to a Globus user or group",
+                "Type": "Action",
+                "ActionUrl": "https://actions.automate.globus.org/transfer/set_permission",
+                "Parameters": {
+                    "endpoint_id.$": "$.input.destination.id",
+                    "path.$": "$.input.destination.path",
+                    "operation": "CREATE",
+                    "permissions": "r",
+                    "principal_type.$": "$.input.principal_type",
+                    "principal.$": "$.input.principal_identifier"
+                },
+                "ResultPath": "$.SetPermission",
+                "End": True
+            }
+        }
+    },
+    "input_schema": {
+        "required": [
+            "input"
+        ],
+        "properties": {
+            "input": {
+                "type": "object",
+                "required": [
+                    "source",
+                    "destination",
+                    "recursive_tx",
+                    "principal_identifier",
+                    "principal_type"
+                ],
+                "properties": {
+                    "source": {
+                        "type": "object",
+                        "title": "Select source collection and path",
+                        "description": "The source collection and path (path MUST end with a slash)",
+                        "format": "globus-collection",
+                        "required": [
+                            "id",
+                            "path"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "format": "uuid",
+                            },
+                            "path": {
+                                "type": "string",
+                            }
+                        },
+                        "additionalProperties": False
+                    },
+                    "destination": {
+                        "type": "object",
+                        "title": "Select destination collection and path",
+                        "description": "The destination collection and path (path MUST end with a slash); default collection is 'Globus Tutorials on ALCF Eagle'",
+                        "format": "globus-collection",
+                        "required": [
+                            "id",
+                            "path"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "default": "a6f165fa-aee2-4fe5-95f3-97429c28bf82"
+                            },
+                            "path": {
+                                "type": "string",
+                                "default": "/automate-tutorial/USERNAME/"
+                            }
+                        },
+                        "additionalProperties": False
+                    },
+                    "recursive_tx": {
+                        "type": "boolean",
+                        "title": "Recursive transfer",
+                        "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
+                        "default": True,
+                    },
+                    "principal_type": {
+                        "type": "string",
+                        "title": "Type of principal to share with",
+                        "description": "Specifies whether files are being shared with a user ('identity') or a group ('group'); default is 'group'",
+                        "enum": [
+                            "identity",
+                            "group"
+                        ],
+                        "default": "group"
+                    },
+                    "principal_identifier": {
+                        "type": "string",
+                        "title": "UUID of user identity or group",
+                        "description": "The user or group id to share with; default is 'Tutorial Users' group.",
+                        "format": "uuid",
+                        "default": "50b6a29c-63ac-11e4-8062-22000ab68755"
+                    }
+                },
+                "additionalProperties": False
+            }
+        },
+        "additionalProperties": False
+    }
+}
