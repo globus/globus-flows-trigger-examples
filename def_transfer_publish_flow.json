@@ -124,7 +124,7 @@
                             },
                             "path": {
                                 "type": "string",
-                                "default": "/automate-tutorial/USERNAME/"
+                                "default": "/automation-tutorial/USERNAME/"
                             }
                         },
                         "additionalProperties": False
