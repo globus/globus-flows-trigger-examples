@@ -12,7 +12,7 @@ def run_flow(event_file):
 
     fc = create_flows_client()
     
-    # Flow to run 
+    # TODO: Specify the flow to run when tiggered
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
     
@@ -80,6 +80,7 @@ def run_flow(event_file):
             "search_ingest_document": {
                 "search_index": search_index,
                 "search_subject": event_folder_name,
+                "search_entry_id": "PUB00001",
                 "search_visible_to": ["public"],
                 "search_content_metadata": {
                     "title": event_folder_name,
@@ -88,6 +89,7 @@ def run_flow(event_file):
                 },
                 # Principal URNs look like urn:globus:auth:identity:GLOBUS_AUTH_IDENTITY_UUID
                 # Ref: https://docs.globus.org/api/search/overview/#principal_urns
+                "search_restricted_entry_id": "RES00001",
                 "search_restricted_visible_to" : [user_identity.principal_urn],
                 "search_content_restricted_metadata": {
                     "secret": "Formula 20220730",

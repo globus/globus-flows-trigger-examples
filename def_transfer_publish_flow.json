@@ -48,7 +48,9 @@
                     "search_index.$": "$.input.search_ingest_document.search_index",  
                     "subject.$": "$.input.search_ingest_document.search_subject",  
                     "visible_to.$": "$.input.search_ingest_document.search_visible_to",  
-                    "content.$": "$.input.search_ingest_document.search_content_metadata"                },
+                    "content.$": "$.input.search_ingest_document.search_content_metadata",
+                    "id.$": "$.input.search_ingest_document.search_entry_id"
+                },
                 "ResultPath": "$.SearchIngest",
                 "Next": "SearchIngestRestricted"
             },
@@ -60,7 +62,8 @@
                     "search_index.$": "$.input.search_ingest_document.search_index",
                     "subject.$": "$.input.search_ingest_document.search_subject",
                     "visible_to.$": "$.input.search_ingest_document.search_restricted_visible_to",
-                    "content.$": "$.input.search_ingest_document.search_content_restricted_metadata"
+                    "content.$": "$.input.search_ingest_document.search_content_restricted_metadata",
+                    "id.$": "$.input.search_ingest_document.search_restricted_entry_id"
                 },
                 "ResultPath": "$.SearchIngestRestricted",
                 "End": True
@@ -156,8 +159,10 @@
                         "required": [
                             "search_index",
                             "search_subject",
+                            "search_entry_id",
                             "search_visible_to",
                             "search_content_metadata",
+                            "search_restricted_entry_id",
                             "search_restricted_visible_to",
                             "search_content_restricted_metadata"
                         ],
@@ -172,6 +177,11 @@
                                 "title": "Globus Search Subject",
                                 "description": "The target data subject for this index entry"
                             },
+                            "search_entry_id": {
+                                "type": "string",
+                                "title": "Entry ID",
+                                "description": "Unique id for the public block of metadata"
+                            },
                             "search_visible_to": {
                                 "type": "array",
                                 "title": "Visible To",
@@ -183,6 +193,11 @@
                                 "title": "Search Metadata",
                                 "description": "The metadata for this index entry",
                                 "additionalProperties": True
+                            },
+                            "search_restricted_entry_id": {
+                                "type": "string",
+                                "title": "Restricted Entry ID",
+                                "description": "Unique id for the restricted block of metadata"
                             },
                             "search_restricted_visible_to": {
                                 "type": "array",

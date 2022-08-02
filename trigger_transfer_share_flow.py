@@ -10,7 +10,7 @@ def run_flow(event_file):
     
     fc = create_flows_client()
 
-    # Flow to run 
+    # TODO: Specify the flow to run when tiggered
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
     
