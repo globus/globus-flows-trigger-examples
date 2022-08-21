@@ -13,6 +13,8 @@ def parse_args():
     parser.add_argument('--title',
         default='Flow from Trigger Examples',
         help='Flow title. [default: "Flow from Trigger Examples"]')
+    parser.add_argument('--flowid',
+        help='Flow ID; used only when updating a flow definition')
     parser.set_defaults(verbose=True)
     
     return parser.parse_args()
@@ -25,18 +27,29 @@ def deploy_flow():
 
     # Get flow and input schema definitions
     with open(args.defs, 'r') as f:
-        # Not super safe but OK for tutorials!
+        # Not super safe, but OK for non-production use!
         flow_def = ast.literal_eval(f.read())  
     
-    # Deploy the flow
-    flow = fc.deploy_flow(
-        flow_def['flow_definition'], 
-        title=args.title,
-        input_schema=flow_def['input_schema']
-    )
+    if args.flowid:
+        # Assume we're updating an existing flow
+        flow_id = args.flowid
+        flow = fc.update_flow(
+            flow_id=flow_id,
+            flow_definition=flow_def['flow_definition'],
+            title=args.title,
+            input_schema=flow_def['input_schema']
+        )
+        print(f"Updated flow {flow_id}")
 
-    flow_id = flow['id']
-    print(f"Deployed flow {flow_id}")
+    else:
+        # Deploy a new flow
+        flow = fc.deploy_flow(
+            flow_definition=flow_def['flow_definition'], 
+            title=args.title,
+            input_schema=flow_def['input_schema']
+        )
+        flow_id = flow['id']
+        print(f"Deployed flow {flow_id}")
     
     return flow_id, flow['globus_auth_scope']
 

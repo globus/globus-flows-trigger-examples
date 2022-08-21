@@ -24,3 +24,10 @@ For example, to trigger the transfer-and-share flow when a file with suffix `.do
 
 ## Modifying the trigger logic
 The trigger logic can be modified by editing the `Handler` class in `watch.py`. By default, the trigger logic will run the flow every time a file is created that ends with one of the suffixes specified in `--patterns`.
+
+## Modifying a deployed flow
+A deployed flow may be updated by running:
+
+     ./deploy_flow.py --flowid <FLOW_ID> --defs <UPDATED_FLOW_DEFINITION> --title <UPDATED_FLOW_TITLE>
+
+Note: This is just a convenience extension for these examples, and is limited to updating only the flow/schema definition and/or flow title; refer to the Globus Flows API reference for the full-featured `PUT`.
