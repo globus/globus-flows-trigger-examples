@@ -1,6 +1,10 @@
 # Examples of Triggers for Globus Flows
 
-We provide three examples of triggering flows. We start with a single-action flow that trasnfers data (as defined in [`def_transfer_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_flow.json)), then add an action that sets permissions for sharing the data (as defined in [`def_transfer_share_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_share_flow.json)), and finally add an action that ingests metadata into a Globus Search index (as defined in [`def_transfer_publish_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_publish_flow.json)).
+We provide three examples of triggering flows:
+
+* We start with a single-action flow that trasnfers data (as defined in [`def_transfer_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_flow.json))
+* Next we add an action that sets permissions for sharing the data (as defined in [`def_transfer_share_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_share_flow.json))
+* And then we add an action that ingests metadata into a Globus Search index (as defined in [`def_transfer_publish_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_publish_flow.json))
 
 ## Installation
 The examples require the `globus_automate_client` and `watchdog` packages. They can be installed by creating a Python virtual environment and running:
@@ -31,3 +35,6 @@ A deployed flow may be updated by running:
      ./deploy_flow.py --flowid <FLOW_ID> --defs <UPDATED_FLOW_DEFINITION> --title <UPDATED_FLOW_TITLE>
 
 Note: This is just a convenience extension for these examples, and is limited to updating only the flow/schema definition and/or flow title; refer to the Globus Flows API reference for the full-featured `PUT`.
+
+## From the future
+The flow [`def_transfer_compute_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_compute_flow.json), transfers files and then runs a function to process them. This flow introduces the use of [funcX](https://funcx.org), a service currently in development (but already in production use at a few large facilities). The corresponding trigger code assumes you have registered the function [`compute_function.py`](https://github.com/globus/globus-flows-trigger-examples/blob/main/compute_function.py); this function generates thumbnails for all files in `input_path` and saves them in `results_path`. It's intended as a simple illustration of a very common pattern: move data to a compute resource and run a job to process the data.
