@@ -14,31 +14,45 @@ def run_flow(event_file):
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
+    # TODO: Set a label for the flow run
+    # Default includes the file name that triggered the run
+    flow_label = f"Trigger transfer->compute->share: {os.path.basename(event_file)}"
+
     # TODO: Modify source collection ID
-    # Source collection must be on the endpoint where this trigger code is running
+    # GCP collection (on the "instrument" endpoint) where trigger is running
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
    
     # TODO: Modify destination collection ID
-    # Default is to use a GCP collection on the funcX endpoint
+    # Destination collection must be accessible by the funcX endpoint
     destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
-    
+
     # TODO: Modify destination collection path
-    destination_base_path = '/home/devN/scratch/'
+    # Update path to include your user name e.g. dev1
+    destination_base_path = '/home/USERNAME/'
+
+    # TODO: Modify funcX registered function ID
+    funcx_function_id = '432d70bc-58a6-4a17-b89f-b49c3425420b'
+
+    # TODO: Modify funcX endpoint ID
+    funcx_endpoint_id = 'b1922a77-c288-49fb-aca0-ccd89794be43'
+
+    # TODO: Modify destination collection ID
+    # Destination must be a guest collection so permission can be set
+    # Default is "Globus Tutorials on ALCF Eagle"
+    resultshare_id = 'a6f165fa-aee2-4fe5-95f3-97429c28bf82'
+
+    # TODO: Modify destination collection path
+    # Update path to include your user name e.g. dev1
+    resultshare_path = '/automation-tutorial/compute-results/USERNAME/'
+
+    # TODO: Modify identity/group ID to share with
+    # Default is "Tutorial Users" group
+    sharee_id = '50b6a29c-63ac-11e4-8062-22000ab68755'
 
     # Get the directory where the triggering file is stored and 
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
-    source_path = os.path.join(event_folder, "") 
-
-    # TODO: Modify funcX registered function ID
-    funcx_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
-
-    # TODO: Modify funcX endpoint ID
-    funcx_endpoint_id = 'REPLACE_WITH_FUNCX_ENDPOINT_ID'
-   
-    # TODO: Set a label for the flow run
-    # Default includes the file name that triggered the run
-    flow_label = f"Transfer and Compute trigger: {os.path.basename(event_file)}"
+    source_path = os.path.join(event_folder, "")    
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions
@@ -64,7 +78,14 @@ def run_flow(event_file):
             "funcx_function_payload": {
                 "input_path": destination_path,
                 "result_path": f"{destination_path}results"
-            }
+            },
+            "resultshare": {
+                "id": resultshare_id,
+                "path": resultshare_path,
+             },
+            "principal_type": "group",
+            "principal_identifier": sharee_id
+
         }
     }
 
@@ -75,8 +96,8 @@ def run_flow(event_file):
         label=flow_label,
         tags=['Trigger_Tutorial']
     )
-    print(f"Transferring and Computing: {source_path}")
-    print(f"https://app.globus.org/runs/{flow_run_request['run_id']}")
+    print(f"\nTransferring and processing: {source_path}")
+    print(f"Manage this run on Globus web app:\nhttps://app.globus.org/runs/{flow_run_request['run_id']}")
 
 
 # Parse input arguments
