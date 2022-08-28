@@ -14,6 +14,10 @@ def run_flow(event_file):
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
+    # TODO: Set a label for the flow run
+    # Default includes the file name that triggered the run
+    flow_label = f"Trigger transfer->compute: {os.path.basename(event_file)}"
+
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
@@ -35,10 +39,6 @@ def run_flow(event_file):
 
     # TODO: Modify funcX endpoint ID
     funcx_endpoint_id = 'REPLACE_WITH_FUNCX_ENDPOINT_ID'
-   
-    # TODO: Set a label for the flow run
-    # Default includes the file name that triggered the run
-    flow_label = f"Transfer and Compute trigger: {os.path.basename(event_file)}"
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions

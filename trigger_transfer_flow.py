@@ -13,7 +13,11 @@ def run_flow(event_file):
     # TODO: Specify the flow to run when tiggered
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
-    
+
+    # TODO: Set a label for the flow run
+    # Default includes the file name that triggered the run
+    flow_label = f"Trigger transfer: {os.path.basename(event_file)}"
+
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
@@ -30,10 +34,6 @@ def run_flow(event_file):
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
     source_path = os.path.join(event_folder, "") 
-
-    # TODO: Set a label for the flow run
-    # Default includes the file name that triggered the run
-    flow_label = f"Transfer and Share for {os.path.basename(event_file)}"
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions
