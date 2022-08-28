@@ -2,7 +2,7 @@
 
 We provide three examples of triggering flows:
 
-* We start with a single-action flow that trasnfers data (as defined in [`def_transfer_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_flow.json))
+* We start with a single-action flow that transfers data (as defined in [`def_transfer_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_flow.json))
 * Next we add an action that sets permissions for sharing the data (as defined in [`def_transfer_share_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_share_flow.json))
 * And then we add an action that ingests metadata into a Globus Search index (as defined in [`def_transfer_publish_flow.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/def_transfer_publish_flow.json))
 
