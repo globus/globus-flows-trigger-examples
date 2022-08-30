@@ -1,4 +1,4 @@
- {
+{
     "flow_definition": {
         "Comment": "Transfer, process and distribute/share files",
         "StartAt": "TransferRaw",
