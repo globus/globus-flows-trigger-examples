@@ -49,10 +49,10 @@
                         "properties": {
                             "id": {
                                 "type": "string",
-                                "format": "uuid",
+                                "format": "uuid"
                             },
                             "path": {
-                                "type": "string",
+                                "type": "string"
                             }
                         },
                         "additionalProperties": False
@@ -83,7 +83,7 @@
                         "type": "boolean",
                         "title": "Recursive transfer",
                         "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
-                        "default": True,
+                        "default": True
                     }
                 },
                 "additionalProperties": False

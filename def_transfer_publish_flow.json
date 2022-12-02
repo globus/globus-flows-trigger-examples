@@ -5,7 +5,6 @@
         "States": {
             "TransferFiles": {
                 "Comment": "Transfer to a guest collection",
-                # https://globus-automate-client.readthedocs.io/en/latest/globus_action_providers.html#globus-transfer-transfer-data
                 "Type": "Action",
                 "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
                 "Parameters": {
@@ -27,7 +26,6 @@
                 "Comment": "Grant read permission on the data to a Globus user or group",
                 "Type": "Action",
                 "ActionUrl": "https://actions.automate.globus.org/transfer/set_permission",
-                # https://globus-automate-client.readthedocs.io/en/latest/globus_action_providers.html#globus-transfer-set-manage-permissions
                 "Parameters": {
                     "endpoint_id.$": "$.input.destination.id",
                     "path.$": "$.input.destination.path",
@@ -84,7 +82,7 @@
                     "recursive_tx",
                     "principal_type",
                     "principal_identifier",
-                    "search_ingest_document", 
+                    "search_ingest_document"
                 ],
                 "properties": {
                     "source": {
@@ -99,10 +97,10 @@
                         "properties": {
                             "id": {
                                 "type": "string",
-                                "format": "uuid",
+                                "format": "uuid"
                             },
                             "path": {
-                                "type": "string",
+                                "type": "string"
                             }
                         },
                         "additionalProperties": False
@@ -133,7 +131,7 @@
                         "type": "boolean",
                         "title": "Recursive transfer",
                         "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
-                        "default": True,
+                        "default": True
                     },
                     "principal_type": {
                         "type": "string",

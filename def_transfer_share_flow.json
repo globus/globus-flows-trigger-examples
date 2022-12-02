@@ -20,7 +20,7 @@
                 },
                 "ResultPath": "$.TransferFiles",
                 "WaitTime": 60,
-                "Next": "SetPermission",
+                "Next": "SetPermission"
             },
             "SetPermission": {
                 "Comment": "Grant read permission on the data to a Globus user or group",
@@ -66,10 +66,10 @@
                         "properties": {
                             "id": {
                                 "type": "string",
-                                "format": "uuid",
+                                "format": "uuid"
                             },
                             "path": {
-                                "type": "string",
+                                "type": "string"
                             }
                         },
                         "additionalProperties": False
@@ -100,7 +100,7 @@
                         "type": "boolean",
                         "title": "Recursive transfer",
                         "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
-                        "default": True,
+                        "default": True
                     },
                     "principal_type": {
                         "type": "string",
