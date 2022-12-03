@@ -1,0 +1,147 @@
+{
+    "required": [
+        "input"
+    ],
+    "properties": {
+        "input": {
+            "type": "object",
+            "required": [
+                "source",
+                "destination",
+                "recursive_tx",
+                "principal_type",
+                "principal_identifier",
+                "search_ingest_document"
+            ],
+            "properties": {
+                "source": {
+                    "type": "object",
+                    "title": "Select source collection and path",
+                    "description": "The source collection and path (path MUST end with a slash)",
+                    "format": "globus-collection",
+                    "required": [
+                        "id",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "path": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "destination": {
+                    "type": "object",
+                    "title": "Select destination collection and path",
+                    "description": "The destination collection and path (path MUST end with a slash); default collection is 'Globus Tutorials on ALCF Eagle'",
+                    "format": "globus-collection",
+                    "required": [
+                        "id",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "format": "uuid",
+                            "default": "a6f165fa-aee2-4fe5-95f3-97429c28bf82"
+                        },
+                        "path": {
+                            "type": "string",
+                            "default": "/automation-tutorial/USERNAME/"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "recursive_tx": {
+                    "type": "boolean",
+                    "title": "Recursive transfer",
+                    "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
+                    "default": true
+                },
+                "principal_type": {
+                    "type": "string",
+                    "title": "Type of principal to share with",
+                    "description": "Specifies whether files are being shared with a user ('identity') or a group ('group'); default is 'group'",
+                    "enum": [
+                        "identity",
+                        "group"
+                    ],
+                    "default": "group"
+                },
+                "principal_identifier": {
+                    "type": "string",
+                    "title": "UUID of user identity or group",
+                    "description": "The user or group id to share with; default is 'Tutorial Users' group.",
+                    "format": "uuid",
+                    "default": "50b6a29c-63ac-11e4-8062-22000ab68755"
+                },
+                "search_ingest_document": {
+                    "type": "object",
+                    "title": "Search ingest document",
+                    "description": "The subject and metadata to be ingested into Globus Search",
+                    "required": [
+                        "search_index",
+                        "search_subject",
+                        "search_entry_id",
+                        "search_visible_to",
+                        "search_content_metadata",
+                        "search_restricted_entry_id",
+                        "search_restricted_visible_to",
+                        "search_content_restricted_metadata"
+                    ],
+                    "properties": {
+                        "search_index": {
+                            "type": "string",
+                            "title": "Globus Search Index ID",
+                            "description": "The UUID of the Globus Search index that will hold this metadata"
+                        },
+                        "search_subject": {
+                            "type": "string",
+                            "title": "Globus Search Subject",
+                            "description": "The target data subject for this index entry"
+                        },
+                        "search_entry_id": {
+                            "type": "string",
+                            "title": "Entry ID",
+                            "description": "Unique id for the public block of metadata"
+                        },
+                        "search_visible_to": {
+                            "type": "array",
+                            "title": "Visible To",
+                            "default": ["public"],
+                            "description": "Globus user(s) or group(s) that can view this metadata"
+                        },
+                        "search_content_metadata": {
+                            "type": "object",
+                            "title": "Search Metadata",
+                            "description": "The metadata for this index entry",
+                            "additionalProperties": true
+                        },
+                        "search_restricted_entry_id": {
+                            "type": "string",
+                            "title": "Restricted Entry ID",
+                            "description": "Unique id for the restricted block of metadata"
+                        },
+                        "search_restricted_visible_to": {
+                            "type": "array",
+                            "title": "Visible To (for restricted metadata)",
+                            "description": "Globus user(s) or group(s) that can view this restricted metadata"
+                        },
+                        "search_content_restricted_metadata": {
+                            "type": "object",
+                            "title": "Restricted Search Metadata",
+                            "description": "The restricted metadata for this index entry",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

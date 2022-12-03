@@ -11,7 +11,7 @@ def run_flow(event_file):
     fc = create_flows_client()
 
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'REPLACE_WITH_FLOW_ID'
+    flow_id = 'cacdabdf-e8d5-4ac5-a666-ee0e98689680'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
     # TODO: Set a label for the flow run
@@ -20,21 +20,21 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # GCP collection (on the "instrument" endpoint) where trigger is running
-    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
+    source_id = '9e5924fa-5b30-11ed-8fcf-e9cb7c15c7d2'
    
     # TODO: Modify destination collection ID
     # Destination collection must be accessible by the funcX endpoint
-    destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
+    destination_id = '65343f42-3a84-11ed-b7fb-855d8beae885'
 
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. dev1
-    destination_base_path = '/home/USERNAME/'
+    destination_base_path = '/home/ubuntu/scratch/'
 
     # TODO: Modify funcX registered function ID
-    funcx_function_id = '432d70bc-58a6-4a17-b89f-b49c3425420b'
+    funcx_function_id = 'bf5856c5-adb4-45ee-a725-b754be20b9eb'
 
     # TODO: Modify funcX endpoint ID
-    funcx_endpoint_id = 'b1922a77-c288-49fb-aca0-ccd89794be43'
+    funcx_endpoint_id = 'd3214941-eefe-4022-9325-a039c8bf6fe8'
 
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
@@ -43,7 +43,7 @@ def run_flow(event_file):
 
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. dev1
-    resultshare_path = '/automation-tutorial/compute-results/USERNAME/'
+    resultshare_path = '/automation-tutorial/compute-results/vas1/'
 
     # TODO: Modify identity/group ID to share with
     # Default is "Tutorial Users" group

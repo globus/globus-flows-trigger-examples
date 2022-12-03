@@ -11,7 +11,7 @@ def run_flow(event_file):
     fc = create_flows_client()
 
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'REPLACE_WITH_FLOW_ID'
+    flow_id = '228d913e-5964-4e26-b8a8-ea5179cf5b17'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
     # TODO: Set a label for the flow run
@@ -20,7 +20,7 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
-    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
+    source_id = '9e5924fa-5b30-11ed-8fcf-e9cb7c15c7d2'
    
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
@@ -29,7 +29,7 @@ def run_flow(event_file):
     
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. /automate-tutorial/dev1/
-    destination_base_path = '/automation-tutorial/USERNAME/'
+    destination_base_path = '/automation-tutorial/vas5/'
 
     # TODO: Modify identity/group ID to share with
     # Default is "Tutorial Users" group

@@ -1,0 +1,43 @@
+{
+    "Comment": "Transfer and process files by invoking a funcX function",
+    "StartAt": "TransferFiles",
+    "States": {
+        "TransferFiles": {
+            "Comment": "Transfer to a guest collection",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.source.id",
+                "destination_endpoint_id.$": "$.input.destination.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.source.path",
+                        "destination_path.$": "$.input.destination.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferFiles",
+            "WaitTime": 60,
+            "Next": "ProcessFiles"
+        },
+        "ProcessFiles": {
+            "Comment": "Process files - generate thumbnails",
+            "Type": "Action",
+            "ActionUrl": "https://automate.funcx.org",
+            "ActionScope": "https://auth.globus.org/scopes/b3db7e59-a6f1-4947-95c2-59d6b7a70f8c/action_all",
+            "Parameters": {
+                "tasks": [
+                    {
+                        "function.$": "$.input.funcx_function_id",
+                        "endpoint.$": "$.input.funcx_endpoint_id",
+                        "payload.$": "$.input.funcx_function_payload"
+                    }
+                ]
+            },
+            "ResultPath": "$.ProcessFiles",
+            "WaitTime": 300,
+            "End": true
+        }
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "Comment": "Transfer files to guest collection, set access permissions and publish metadata in search",
+    "StartAt": "TransferFiles",
+    "States": {
+        "TransferFiles": {
+            "Comment": "Transfer to a guest collection",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.source.id", 
+                "destination_endpoint_id.$": "$.input.destination.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.source.path",
+                        "destination_path.$": "$.input.destination.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferFiles",
+            "WaitTime": 60,
+            "Next": "SetPermission"
+        },
+        "SetPermission": {
+            "Comment": "Grant read permission on the data to a Globus user or group",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/set_permission",
+            "Parameters": {
+                "endpoint_id.$": "$.input.destination.id",
+                "path.$": "$.input.destination.path",
+                "operation": "CREATE",
+                "permissions": "r",
+                "principal_type.$": "$.input.principal_type",
+                "principal.$": "$.input.principal_identifier"
+            },
+            "ExceptionOnActionFailure": false,
+            "ResultPath": "$.SetPermission",
+            "Next": "SearchIngest"
+        },
+        "SearchIngest": {
+            "Comment": "Ingest metadata to a Globus Search index",
+            "Type": "Action",
+            "ActionUrl": "https://actions.globus.org/search/ingest",
+            "Parameters": {
+                "search_index.$": "$.input.search_ingest_document.search_index",  
+                "subject.$": "$.input.search_ingest_document.search_subject",  
+                "visible_to.$": "$.input.search_ingest_document.search_visible_to",  
+                "content.$": "$.input.search_ingest_document.search_content_metadata",
+                "id.$": "$.input.search_ingest_document.search_entry_id"
+            },
+            "ResultPath": "$.SearchIngest",
+            "Next": "SearchIngestRestricted"
+        },
+        "SearchIngestRestricted": {
+            "Comment": "Ingest metadata with restricted visibility to a Globus Search index",
+            "Type": "Action",
+            "ActionUrl": "https://actions.globus.org/search/ingest",
+            "Parameters": {
+                "search_index.$": "$.input.search_ingest_document.search_index",
+                "subject.$": "$.input.search_ingest_document.search_subject",
+                "visible_to.$": "$.input.search_ingest_document.search_restricted_visible_to",
+                "content.$": "$.input.search_ingest_document.search_content_restricted_metadata",
+                "id.$": "$.input.search_ingest_document.search_restricted_entry_id"
+            },
+            "ResultPath": "$.SearchIngestRestricted",
+            "End": true
+        }
+    }
+}

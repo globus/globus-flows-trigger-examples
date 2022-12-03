@@ -1,0 +1,132 @@
+{
+    "required": [
+        "input"
+    ],
+    "properties": {
+        "input": {
+            "type": "object",
+            "required": [
+                "source",
+                "destination",
+                "recursive_tx",
+                "funcx_function_id",
+                "funcx_endpoint_id",
+                "funcx_function_payload",
+                "resultshare",
+                "principal_identifier",
+                "principal_type"
+            ],
+            "properties": {
+                "source": {
+                    "type": "object",
+                    "title": "Select source collection and path",
+                    "description": "The raw data collection and path (e.g., on the instrument).",
+                    "format": "globus-collection",
+                    "required": [
+                        "id",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "path": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "destination": {
+                    "type": "object",
+                    "title": "Select destination collection and path",
+                    "description": "The collection and path on the funcX endpoint.",
+                    "format": "globus-collection",
+                    "required": [
+                        "id",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "path": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "recursive_tx": {
+                    "type": "boolean",
+                    "title": "Recursive transfer",
+                    "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
+                    "default": true
+                },
+                "funcx_function_id": {
+                    "type": "string",
+                    "format": "uuid",                        
+                    "title": "funcX function ID",
+                    "description": "The UUID of the function to invoke; must be registered with the funcX service.",
+                    "properties": {},
+                    "additionalProperties": false
+                },
+                "funcx_endpoint_id": {
+                    "type": "string",
+                    "format": "uuid",                        
+                    "title": "funcX endpoint ID",
+                    "description": "The UUID of the funcX endpoint where the function will run.",
+                    "properties": {},
+                    "additionalProperties": false
+                },
+                "funcx_function_payload": {
+                    "type": "object",
+                    "title": "Payload",
+                    "description": "Inputs to pass to the function.",
+                    "properties": {},
+                    "additionalProperties": true
+                },
+                "resultshare": {
+                    "type": "object",
+                    "title": "Results sharing destination collection and path",
+                    "description": "The collection and path for sharing the result files.",
+                    "format": "globus-collection",
+                    "required": [
+                        "id",
+                        "path"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "path": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "principal_type": {
+                    "type": "string",
+                    "title": "Type of principal to share with",
+                    "description": "Specifies whether files are being shared with a user ('identity') or a group ('group'); default is 'group'.",
+                    "enum": [
+                        "identity",
+                        "group"
+                    ],
+                    "default": "group"
+                },
+                "principal_identifier": {
+                    "type": "string",
+                    "title": "UUID of user identity or group",
+                    "description": "The user or group id to share with; default is 'Tutorial Users' group.",
+                    "format": "uuid",
+                    "default": "50b6a29c-63ac-11e4-8062-22000ab68755"
+                }
+            },
+            "additionalProperties": false
+        }
+
+    },
+    "additionalProperties": false
+}

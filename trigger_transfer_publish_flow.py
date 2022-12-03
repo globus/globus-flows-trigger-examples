@@ -13,7 +13,7 @@ def run_flow(event_file):
     fc = create_flows_client()
     
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'REPLACE_WITH_FLOW_ID'
+    flow_id = '38558b02-37ad-42f0-b0e1-3fe8c182d994'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
     # TODO: Set a label for the flow run
@@ -22,7 +22,7 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
-    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
+    source_id = '9e5924fa-5b30-11ed-8fcf-e9cb7c15c7d2'
     
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
@@ -31,14 +31,14 @@ def run_flow(event_file):
 
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. /automate-tutorial/dev1/
-    destination_base_path = '/automation-tutorial/USERNAME/'
+    destination_base_path = '/automation-tutorial/vas3/'
 
     # TODO: Modify identity/group ID to share with
     # Default is "Tutorial Users" group
     sharee_id = '50b6a29c-63ac-11e4-8062-22000ab68755'
     
     # TODO: Specify the search index to publish your metadata 
-    search_index = 'REPLACE_WITH_GLOBUS_SEARCH_INDEX_ID'
+    search_index = '6da22a1b-5a75-465c-95a9-7ce06b711282'
 
     # Get the directory where the triggering file is stored and 
     # add trailing '/' to satisfy Transfer requirements for moving a directory

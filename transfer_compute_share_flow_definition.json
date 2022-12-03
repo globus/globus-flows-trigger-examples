@@ -1,0 +1,77 @@
+{
+    "Comment": "Transfer, process and distribute/share files",
+    "StartAt": "TransferRaw",
+    "States": {
+        "TransferRaw": {
+            "Comment": "Transfer raw data to a compute (funcX) endpoint",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.source.id",
+                "destination_endpoint_id.$": "$.input.destination.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.source.path",
+                        "destination_path.$": "$.input.destination.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferRaw",
+            "WaitTime": 60,
+            "Next": "ProcessFiles"
+        },
+        "ProcessFiles": {
+            "Comment": "Process files by invoking a funcX function",
+            "Type": "Action",
+            "ActionUrl": "https://automate.funcx.org",
+            "ActionScope": "https://auth.globus.org/scopes/b3db7e59-a6f1-4947-95c2-59d6b7a70f8c/action_all",
+            "Parameters": {
+                "tasks": [
+                    {
+                        "function.$": "$.input.funcx_function_id",
+                        "endpoint.$": "$.input.funcx_endpoint_id",
+                        "payload.$": "$.input.funcx_function_payload"
+                    }
+                ]
+            },
+            "ResultPath": "$.ProcessFiles",
+            "WaitTime": 300,
+            "Next": "TransferResults"
+        },
+        "TransferResults": {
+            "Comment": "Transfer processed files to a guest collection",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.destination.id",
+                "destination_endpoint_id.$": "$.input.resultshare.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.destination.path",
+                        "destination_path.$": "$.input.resultshare.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferResults",
+            "WaitTime": 60,
+            "Next": "ShareResultFiles"
+        },
+        "ShareResultFiles": {
+            "Comment": "Grant read permission on the data to a Globus user or group",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/set_permission",
+            "Parameters": {
+                "endpoint_id.$": "$.input.resultshare.id",
+                "path.$": "$.input.resultshare.path",
+                "operation": "CREATE",
+                "permissions": "r",
+                "principal_type.$": "$.input.principal_type",
+                "principal.$": "$.input.principal_identifier"
+            },
+            "ResultPath": "$.ShareResultFiles",
+            "End": true
+        }
+    }
+}

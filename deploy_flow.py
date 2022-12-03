@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-import ast
 import argparse
-from globus_automate_client import create_flows_client
 
 # Parse input arguments
 def parse_args():
     parser = argparse.ArgumentParser(description='''
         Deploy a flow for use with trigger examples.''')
-    parser.add_argument('--defs', required=True,
-        help='Name of file containing the flow and input schema definitions.')
+    parser.add_argument('--flowdef', required=True,
+        help='Name of file containing the flow definition and input schema definitions.')
+    parser.add_argument('--schema', required=True,
+        help='Name of file containing the input schema definition.')
     parser.add_argument('--title',
         default='Flow from Trigger Examples',
         help='Flow title. [default: "Flow from Trigger Examples"]')
@@ -19,6 +19,9 @@ def parse_args():
     
     return parser.parse_args()
 
+
+import json
+from globus_automate_client import create_flows_client
  
 def deploy_flow():
 
@@ -26,27 +29,29 @@ def deploy_flow():
     fc = create_flows_client()
 
     # Get flow and input schema definitions
-    with open(args.defs, 'r') as f:
-        # Not super safe, but OK for non-production use!
-        flow_def = ast.literal_eval(f.read())  
+    with open(args.flowdef, 'r') as f:
+        flow_def = f.read()
     
+    with open(args.schema, 'r') as f:
+        schema = f.read() 
+
     if args.flowid:
         # Assume we're updating an existing flow
         flow_id = args.flowid
         flow = fc.update_flow(
             flow_id=flow_id,
-            flow_definition=flow_def['flow_definition'],
+            flow_definition=json.loads(flow_def),
             title=args.title,
-            input_schema=flow_def['input_schema']
+            input_schema=json.loads(schema)
         )
         print(f"Updated flow {flow_id}")
 
     else:
         # Deploy a new flow
         flow = fc.deploy_flow(
-            flow_definition=flow_def['flow_definition'], 
+            flow_definition=json.loads(flow_def),
             title=args.title,
-            input_schema=flow_def['input_schema']
+            input_schema=json.loads(schema)
         )
         flow_id = flow['id']
         print(f"Deployed flow {flow_id}")

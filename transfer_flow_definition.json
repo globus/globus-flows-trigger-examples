@@ -1,0 +1,25 @@
+{
+    "Comment": "Transfer files using Globus Transfer",
+    "StartAt": "TransferFiles",
+    "States": {
+        "TransferFiles": {
+            "Comment": "Transfer a file or directory",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.source.id",
+                "destination_endpoint_id.$": "$.input.destination.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.source.path",
+                        "destination_path.$": "$.input.destination.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferFiles",
+            "WaitTime": 60,
+            "End": true
+        }
+    }
+}

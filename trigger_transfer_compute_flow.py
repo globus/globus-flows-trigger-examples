@@ -11,7 +11,7 @@ def run_flow(event_file):
     fc = create_flows_client()
 
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'REPLACE_WITH_FLOW_ID'
+    flow_id = '0b6937a1-5fc0-438d-a094-755d0493a520'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
     # TODO: Set a label for the flow run
@@ -20,14 +20,14 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
-    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
+    source_id = '9e5924fa-5b30-11ed-8fcf-e9cb7c15c7d2'
    
     # TODO: Modify destination collection ID
     # Default is to use a GCP collection on the funcX endpoint
-    destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
+    destination_id = '65343f42-3a84-11ed-b7fb-855d8beae885'
     
     # TODO: Modify destination collection path
-    destination_base_path = '/home/devN/scratch/'
+    destination_base_path = '/home/ubuntu/scratch/'
 
     # Get the directory where the triggering file is stored and 
     # add trailing '/' to satisfy Transfer requirements for moving a directory
@@ -35,10 +35,10 @@ def run_flow(event_file):
     source_path = os.path.join(event_folder, "") 
 
     # TODO: Modify funcX registered function ID
-    funcx_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
+    funcx_function_id = 'bf5856c5-adb4-45ee-a725-b754be20b9eb'
 
     # TODO: Modify funcX endpoint ID
-    funcx_endpoint_id = 'REPLACE_WITH_FUNCX_ENDPOINT_ID'
+    funcx_endpoint_id = 'd3214941-eefe-4022-9325-a039c8bf6fe8'
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions

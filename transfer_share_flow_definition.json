@@ -1,0 +1,40 @@
+{
+    "Comment": "Transfer files to a guest collection and set access permissions",
+    "StartAt": "TransferFiles",
+    "States": {
+        "TransferFiles": {
+            "Comment": "Transfer to a guest collection",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.input.source.id",
+                "destination_endpoint_id.$": "$.input.destination.id",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.input.source.path",
+                        "destination_path.$": "$.input.destination.path",
+                        "recursive.$": "$.input.recursive_tx"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferFiles",
+            "WaitTime": 60,
+            "Next": "SetPermission"
+        },
+        "SetPermission": {
+            "Comment": "Grant read permission on the data to a Globus user or group",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/set_permission",
+            "Parameters": {
+                "endpoint_id.$": "$.input.destination.id",
+                "path.$": "$.input.destination.path",
+                "operation": "CREATE",
+                "permissions": "r",
+                "principal_type.$": "$.input.principal_type",
+                "principal.$": "$.input.principal_identifier"
+            },
+            "ResultPath": "$.SetPermission",
+            "End": true
+        }
+    }
+}
