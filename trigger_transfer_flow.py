@@ -11,7 +11,7 @@ def run_flow(event_file):
     fc = create_flows_client()
 
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'ccb8076f-4d02-4cac-a13f-ee566b06c7f0'
+    flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
 
     # TODO: Set a label for the flow run
@@ -20,7 +20,7 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
-    source_id = '9e5924fa-5b30-11ed-8fcf-e9cb7c15c7d2'
+    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
    
     # TODO: Modify destination collection ID
     # Default is "Globus Tutorials on ALCF Eagle"
@@ -28,7 +28,7 @@ def run_flow(event_file):
     
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. /automate-tutorial/dev1/
-    destination_base_path = '/automation-tutorial/vas2/'
+    destination_base_path = '/automation-tutorial/USERNAME/'
 
     # Get the directory where the triggering file is stored and 
     # add trailing '/' to satisfy Transfer requirements for moving a directory
