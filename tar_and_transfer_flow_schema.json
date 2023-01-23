@@ -1,0 +1,73 @@
+{
+  "additionalProperties": false,
+  "required": [
+    "tar",
+    "transfer"
+  ],
+  "properties": {
+    "tar": {
+      "type": "object",
+      "required": [
+        "funcx_endpoint",
+        "funcx_function",
+        "inputs",
+        "output"
+      ],
+      "properties": {
+        "funcx_endpoint": {
+          "type": "string",
+          "description": "The funcx endpoint where your data is located"
+        },
+        "funcx_function": {
+          "type": "string",
+          "description": "The tar function id"
+        },
+        "inputs": {
+          "type": "array",
+          "description": "Input files or directories to tar",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output": {
+          "type": "string",
+          "description": "Name of the tarred output"
+        },
+        "additionalProperties": false
+      }
+    },
+    "transfer": {
+      "type": "object",
+      "required": [
+        "source_collection",
+        "source_path",
+        "destination_collection",
+        "destination_path",
+        "label"
+      ],
+      "properties": {
+        "source_collection": {
+          "type": "string",
+          "description": "Globus collection containing tar file"
+        },
+        "source_path": {
+          "type": "string",
+          "description": "Path of tar file on collection"
+        },
+        "destination_collection": {
+          "type": "string",
+          "description": "Collection where the tar file will be transferred"
+        },
+        "destination_path": {
+          "type": "string",
+          "description": "New path of tar file on collection"
+        },
+        "label": {
+          "type": "string",
+          "description": "The name of this transfer"
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
