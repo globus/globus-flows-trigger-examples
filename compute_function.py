@@ -1,10 +1,11 @@
 ''' The function below is used by the transfer-and-compute flow.
-In order to use it, you must first register it with the funcX service,
-as described here: https://funcx.readthedocs.io/en/latest/index.html
+In order to use it, you must first register it with the 
+Globus Compute service, as described here:
+https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
 (code is also provided below).
 
 Before invoking the function, ensure that you have the Pillow library
-(https://python-pillow.org) installed on your funcX endpoint.
+(https://python-pillow.org) installed on your Globus Compute endpoint.
 '''
 
 def process_images(input_path=None, result_path=None):
@@ -32,14 +33,14 @@ def process_images(input_path=None, result_path=None):
 '''Code to register the function with the funcX service
 '''
 
-from funcx import FuncXClient
+from globus_compute_sdk import Client
 
 def deploy_function():
-    fxc = FuncXClient()
-    func_uuid = fxc.register_function(process_images)
+    client = Client()
+    func_uuid = client.register_function(process_images)
 
     # Register a function and allow a Globus group of users to invoke it
-    func_uuid = fxc.register_function(process_images, group="GLOBUS_GROUP_ID")
+    func_uuid = client.register_function(process_images, group="GLOBUS_GROUP_ID")
 
     print(f"Registered function with ID {func_uuid}")
 
