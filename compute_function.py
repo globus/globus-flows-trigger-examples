@@ -8,13 +8,15 @@ Before invoking the function, ensure that you have the Pillow library
 (https://python-pillow.org) installed on your Globus Compute endpoint.
 '''
 
+GLOBUS_GROUP_ID = '50b6a29c-63ac-11e4-8062-22000ab68755'  # Tutorial Users group
+
 def process_images(input_path=None, result_path=None):
 
     import os
     import glob
     from PIL import Image
     
-    files = (file for file in glob.glob(os.path.join(input_path,'*')) \
+    files = (file for file in glob.glob(os.path.join(input_path,'*.png')) \
         if os.path.isfile(os.path.join(input_path, file)))
 
     if not os.path.exists(result_path):
@@ -40,7 +42,7 @@ def deploy_function():
     func_uuid = client.register_function(process_images)
 
     # Register a function and allow a Globus group of users to invoke it
-    func_uuid = client.register_function(process_images, group="GLOBUS_GROUP_ID")
+    func_uuid = client.register_function(process_images, group=GLOBUS_GROUP_ID)
 
     print(f"Registered function with ID {func_uuid}")
 
