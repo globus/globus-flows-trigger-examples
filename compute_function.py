@@ -30,7 +30,7 @@ def process_images(input_path=None, result_path=None):
         image.save(f"{result_path}/thumb_{os.path.basename(file)}")
 
 
-'''Code to register the function with the funcX service
+'''Code to register the function with the Globus Compute service
 '''
 
 from globus_compute_sdk import Client
