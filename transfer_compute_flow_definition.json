@@ -1,9 +1,9 @@
 {
-    "Comment": "Transfer and process files by invoking a funcX function",
+    "Comment": "Transfer and process files by invoking a Globus Compute function",
     "StartAt": "TransferFiles",
     "States": {
         "TransferFiles": {
-            "Comment": "Transfer to a guest collection",
+            "Comment": "Transfer files",
             "Type": "Action",
             "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
             "Parameters": {
