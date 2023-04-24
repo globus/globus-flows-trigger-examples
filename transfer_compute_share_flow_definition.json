@@ -3,7 +3,7 @@
     "StartAt": "TransferRaw",
     "States": {
         "TransferRaw": {
-            "Comment": "Transfer raw data to a compute (funcX) endpoint",
+            "Comment": "Transfer raw data to a Globus Compute endpoint",
             "Type": "Action",
             "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
             "Parameters": {
@@ -22,18 +22,13 @@
             "Next": "ProcessFiles"
         },
         "ProcessFiles": {
-            "Comment": "Process files by invoking a funcX function",
+            "Comment": "Process files by invoking a Globus Compute function",
             "Type": "Action",
-            "ActionUrl": "https://automate.funcx.org",
-            "ActionScope": "https://auth.globus.org/scopes/b3db7e59-a6f1-4947-95c2-59d6b7a70f8c/action_all",
+            "ActionUrl": "https://compute.actions.globus.org/fxap",
             "Parameters": {
-                "tasks": [
-                    {
-                        "function.$": "$.input.funcx_function_id",
-                        "endpoint.$": "$.input.funcx_endpoint_id",
-                        "payload.$": "$.input.funcx_function_payload"
-                    }
-                ]
+                "endpoint.$": "$.input.compute_endpoint_id",
+                "function.$": "$.input.compute_function_id",
+                "kwargs.$": "$.input.compute_function_kwargs"
             },
             "ResultPath": "$.ProcessFiles",
             "WaitTime": 300,
