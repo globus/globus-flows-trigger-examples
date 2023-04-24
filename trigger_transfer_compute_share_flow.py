@@ -23,18 +23,18 @@ def run_flow(event_file):
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
    
     # TODO: Modify destination collection ID
-    # Destination collection must be accessible by the funcX endpoint
+    # Destination collection must be accessible by the Globus Compute endpoint
     destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
 
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. dev1
     destination_base_path = '/home/ubuntu/scratch/'
 
-    # TODO: Modify funcX registered function ID
-    funcx_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
+    # TODO: Modify Globus Compute endpoint ID
+    compute_endpoint_id = 'REPLACE_WITH_COMPUTE_ENDPOINT_ID'
 
-    # TODO: Modify funcX endpoint ID
-    funcx_endpoint_id = 'REPLACE_WITH_FUNCX_ENDPOINT_ID'
+    # TODO: Modify Globus Compute registered function ID
+    compute_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
 
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
@@ -73,19 +73,18 @@ def run_flow(event_file):
                 "path": destination_path,
              },
             "recursive_tx": True,
-            "funcx_function_id": funcx_function_id,
-            "funcx_endpoint_id": funcx_endpoint_id,
-            "funcx_function_payload": {
+            "compute_endpoint_id": compute_endpoint_id,
+            "compute_function_id": compute_function_id,
+            "compute_function_kwargs": {
                 "input_path": destination_path,
                 "result_path": f"{destination_path}results"
-            },
+            }
             "resultshare": {
                 "id": resultshare_id,
                 "path": resultshare_path,
              },
             "principal_type": "group",
             "principal_identifier": sharee_id
-
         }
     }
 
@@ -103,7 +102,7 @@ def run_flow(event_file):
 # Parse input arguments
 def parse_args():
     parser = argparse.ArgumentParser(description='''
-        Ru  a compute job/task using funcX''')
+        Run a compute job/task using Globus Compute and share results''')
     parser.add_argument('--watchdir',
         type=str,
         default=os.path.abspath('.'),

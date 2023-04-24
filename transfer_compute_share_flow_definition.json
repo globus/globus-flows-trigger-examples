@@ -31,7 +31,7 @@
                 "kwargs.$": "$.input.compute_function_kwargs"
             },
             "ResultPath": "$.ProcessFiles",
-            "WaitTime": 300,
+            "WaitTime": 180,
             "Next": "TransferResults"
         },
         "TransferResults": {
