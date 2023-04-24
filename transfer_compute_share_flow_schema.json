@@ -9,9 +9,9 @@
                 "source",
                 "destination",
                 "recursive_tx",
-                "funcx_function_id",
-                "funcx_endpoint_id",
-                "funcx_function_payload",
+                "compute_endpoint_id",
+                "compute_function_id",
+                "compute_function_kwargs",
                 "resultshare",
                 "principal_identifier",
                 "principal_type"
@@ -40,7 +40,7 @@
                 "destination": {
                     "type": "object",
                     "title": "Select destination collection and path",
-                    "description": "The collection and path on the funcX endpoint.",
+                    "description": "The collection and path on the Globus Compute endpoint.",
                     "format": "globus-collection",
                     "required": [
                         "id",
@@ -63,25 +63,25 @@
                     "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
                     "default": true
                 },
-                "funcx_function_id": {
+                "compute_endpoint_id": {
                     "type": "string",
                     "format": "uuid",                        
-                    "title": "funcX function ID",
-                    "description": "The UUID of the function to invoke; must be registered with the funcX service.",
-                    "properties": {},
-                    "additionalProperties": false
-                },
-                "funcx_endpoint_id": {
-                    "type": "string",
-                    "format": "uuid",                        
-                    "title": "funcX endpoint ID",
+                    "title": "Globus Compute Endpoint ID",
                     "description": "The UUID of the funcX endpoint where the function will run.",
                     "properties": {},
                     "additionalProperties": false
                 },
-                "funcx_function_payload": {
+                "compute_function_id": {
+                    "type": "string",
+                    "format": "uuid",                        
+                    "title": "Globus Compute Function ID",
+                    "description": "The UUID of the function to invoke; must be registered with the Globus Compute service.",
+                    "properties": {},
+                    "additionalProperties": false
+                },
+                "compute_function_kwargs": {
                     "type": "object",
-                    "title": "Payload",
+                    "title": "Function Inputs",
                     "description": "Inputs to pass to the function.",
                     "properties": {},
                     "additionalProperties": true
