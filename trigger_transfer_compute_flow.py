@@ -34,11 +34,11 @@ def run_flow(event_file):
     event_folder = os.path.dirname(event_file)
     source_path = os.path.join(event_folder, "") 
 
-    # TODO: Modify funcX registered function ID
-    funcx_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
+    # TODO: Modify Globus Compute endpoint ID
+    compute_endpoint_id = 'REPLACE_WITH_COMPUTE_ENDPOINT_ID'
 
-    # TODO: Modify funcX endpoint ID
-    funcx_endpoint_id = 'REPLACE_WITH_FUNCX_ENDPOINT_ID'
+    # TODO: Modify Globus Compute registered function ID
+    compute_function_id = 'REPLACE_WITH_REGISTERED_FUNCTION_ID'
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions
@@ -59,9 +59,9 @@ def run_flow(event_file):
                 "path": destination_path,
              },
             "recursive_tx": True,
-            "funcx_function_id": funcx_function_id,
-            "funcx_endpoint_id": funcx_endpoint_id,
-            "funcx_function_payload": {
+            "compute_endpoint_id": compute_endpoint_id,
+            "compute_function_id": compute_function_id,
+            "compute_function_kwargs": {
                 "input_path": destination_path,
                 "result_path": f"{destination_path}results"
             }
@@ -82,7 +82,7 @@ def run_flow(event_file):
 # Parse input arguments
 def parse_args():
     parser = argparse.ArgumentParser(description='''
-        Ru  a compute job/task using funcX''')
+        Run a compute job/task using Globus Compute''')
     parser.add_argument('--watchdir',
         type=str,
         default=os.path.abspath('.'),

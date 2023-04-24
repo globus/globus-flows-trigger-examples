@@ -35,13 +35,13 @@ def run_flow(event_file):
     # TODO: Modify tar filename
     tar_output = "/path/to/output/mydata.tgz"
 
-    # TODO: Specify tar funcx endpoint where function will run
-    funcx_endpoint = ""
+    # TODO: Modify Globus Compute endpoint ID where tar will run
+    compute_endpoint_id = 'REPLACE_WITH_COMPUTE_ENDPOINT_ID'
 
     # TODO: Specify the tar function id
     # The tar function has already been deployed as 081eb4c1-ecce-445c-880e-8488bed6698a
     # If you would like to make changes to this function, see tar_function.py, compute_function.py, and update here
-    funcx_function = "c55330d8-e788-4416-8697-995d2237add9"
+    compute_function_id = "c55330d8-e788-4416-8697-995d2237add9"
 
     # Get the directory where the triggering file is stored and 
     # add trailing '/' to satisfy Transfer requirements for moving a directory
@@ -55,11 +55,13 @@ def run_flow(event_file):
     # Inputs to the flow
     flow_input = {
         "tar": {
-            "funcx_function": funcx_function,
-            "funcx_endpoint": funcx_endpoint,
-            "inputs": tar_inputs,
-            "output": tar_output
-        },
+            "compute_endpoint_id": compute_endpoint_id,
+            "compute_function_id": compute_function_id,
+            "compute_function_kwargs": {
+                "inputs": tar_inputs,
+                "output": tar_output
+            }
+        }
         "transfer": {
             "source_collection": source_id,
             "source_path": tar_output,
