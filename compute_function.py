@@ -46,4 +46,12 @@ def deploy_function():
 
     print(f"Registered function with ID {func_uuid}")
 
+ 
+def main():
+    deploy_function()
+
+
+if __name__ == "__main__":
+    main()
+ 
 ### EOF
