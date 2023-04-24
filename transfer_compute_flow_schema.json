@@ -9,9 +9,9 @@
                 "source",
                 "destination",
                 "recursive_tx",
-                "funcx_function_id",
-                "funcx_endpoint_id",
-                "funcx_function_payload"
+                "compute_endpoint_id",
+                "compute_function_id",
+                "compute_function_kwargs"
             ],
             "properties": {
                 "source": {
@@ -60,25 +60,25 @@
                     "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
                     "default": true
                 },
-                "funcx_function_id": {
+                "compute_endpoint_id": {
                     "type": "string",
                     "format": "uuid",                        
-                    "title": "funcX function ID",
-                    "description": "The UUID of the function to invoke; must be registered with the funcX service",
+                    "title": "Globus Compute endpoint ID",
+                    "description": "The UUID of the Globus Compute endpoint where the function will run",
                     "properties": {},
                     "additionalProperties": false
                 },
-                "funcx_endpoint_id": {
+                "compute_function_id": {
                     "type": "string",
                     "format": "uuid",                        
-                    "title": "funcX endpoint ID",
-                    "description": "The UUID of the funcX endpoint where the function will run",
+                    "title": "Globus Compute function ID",
+                    "description": "The UUID of the function to invoke; must be registered with the Globus Compute service",
                     "properties": {},
                     "additionalProperties": false
                 },
-                "funcx_function_payload": {
+                "compute_function_kwargs": {
                     "type": "object",
-                    "title": "Payload",
+                    "title": "kwargs",
                     "description": "Inputs to pass to the function",
                     "properties": {},
                     "additionalProperties": true
