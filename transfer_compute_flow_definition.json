@@ -24,19 +24,14 @@
         "ProcessFiles": {
             "Comment": "Process files - generate thumbnails",
             "Type": "Action",
-            "ActionUrl": "https://automate.funcx.org",
-            "ActionScope": "https://auth.globus.org/scopes/b3db7e59-a6f1-4947-95c2-59d6b7a70f8c/action_all",
+            "ActionUrl": "https://compute.actions.globus.org/fxap",
             "Parameters": {
-                "tasks": [
-                    {
-                        "function.$": "$.input.funcx_function_id",
-                        "endpoint.$": "$.input.funcx_endpoint_id",
-                        "payload.$": "$.input.funcx_function_payload"
-                    }
-                ]
+                "endpoint.$": "$.input.compute_endpoint_id",
+                "function.$": "$.input.compute_function_id",
+                "kwargs.$": "$.input.compute_function_kwargs"
             },
             "ResultPath": "$.ProcessFiles",
-            "WaitTime": 300,
+            "WaitTime": 180,
             "End": true
         }
     }
