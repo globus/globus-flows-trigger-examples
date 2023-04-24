@@ -23,7 +23,7 @@ def run_flow(event_file):
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
    
     # TODO: Modify destination collection ID
-    # Default is to use a GCP collection on the funcX endpoint
+    # Default is to use a GCP collection on the Globus Compute endpoint
     destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
     
     # TODO: Modify destination collection path
