@@ -78,7 +78,7 @@ def run_flow(event_file):
             "compute_function_kwargs": {
                 "input_path": destination_path,
                 "result_path": f"{destination_path}results"
-            }
+            },
             "resultshare": {
                 "id": resultshare_id,
                 "path": resultshare_path,
