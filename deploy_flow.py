@@ -16,13 +16,13 @@ def parse_args():
     parser.add_argument('--flowid',
         help='Flow ID; used only when updating a flow definition')
     parser.set_defaults(verbose=True)
-    
+
     return parser.parse_args()
 
 
 import json
 from globus_automate_client import create_flows_client
- 
+
 def deploy_flow():
 
     args = parse_args()
@@ -31,9 +31,9 @@ def deploy_flow():
     # Get flow and input schema definitions
     with open(args.flowdef, 'r') as f:
         flow_def = f.read()
-    
+
     with open(args.schema, 'r') as f:
-        schema = f.read() 
+        schema = f.read()
 
     if args.flowid:
         # Assume we're updating an existing flow
@@ -55,7 +55,7 @@ def deploy_flow():
         )
         flow_id = flow['id']
         print(f"Deployed flow {flow_id}")
-    
+
     return flow_id, flow['globus_auth_scope']
 
 if __name__ == '__main__':

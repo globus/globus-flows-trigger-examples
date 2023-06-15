@@ -7,7 +7,7 @@ import argparse
 from globus_automate_client import create_flows_client
 
 def run_flow(event_file):
-    
+
     fc = create_flows_client()
 
     # TODO: Specify the flow to run when tiggered
@@ -21,7 +21,7 @@ def run_flow(event_file):
     # TODO: Modify source collection ID
     # GCP collection (on the "instrument" endpoint) where trigger is running
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
-   
+
     # TODO: Modify destination collection ID
     # Destination collection must be accessible by the Globus Compute endpoint
     destination_id = 'REPLACE_WITH_DESTINATION_COLLECTION_ID'
@@ -49,10 +49,10 @@ def run_flow(event_file):
     # Default is "Tutorial Users" group
     sharee_id = '50b6a29c-63ac-11e4-8062-22000ab68755'
 
-    # Get the directory where the triggering file is stored and 
+    # Get the directory where the triggering file is stored and
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
-    source_path = os.path.join(event_folder, "")    
+    source_path = os.path.join(event_folder, "")
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions
@@ -110,17 +110,17 @@ def parse_args():
     parser.add_argument('--patterns',
         type=str,
         default='',
-        nargs='*', 
+        nargs='*',
         help='Filename suffix pattern(s) that will trigger the flow. [default: ""]')
     parser.set_defaults(verbose=True)
-    
+
     return parser.parse_args()
 
 
 if __name__ == '__main__':
 
     args = parse_args()
-    
+
     # Creates and starts the watcher
     from watch import FileTrigger
     trigger = FileTrigger(

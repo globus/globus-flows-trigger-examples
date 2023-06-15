@@ -20,7 +20,7 @@ def run_flow(event_file):
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
     source_id = ''
-   
+
     # TODO: Modify destination collection ID
     destination_id = ''
 
@@ -43,7 +43,7 @@ def run_flow(event_file):
     # If you would like to make changes to this function, see tar_function.py, compute_function.py, and update here
     compute_function_id = "c55330d8-e788-4416-8697-995d2237add9"
 
-    # Get the directory where the triggering file is stored and 
+    # Get the directory where the triggering file is stored and
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
 
@@ -96,13 +96,13 @@ def parse_args():
                         nargs='*',
                         help='Filename suffix pattern(s) that will trigger the flow. [default: ""]')
     parser.set_defaults(verbose=True)
-    
+
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = parse_args()
-    
+
     # Creates and starts the watcher
     from watch import FileTrigger
     trigger = FileTrigger(

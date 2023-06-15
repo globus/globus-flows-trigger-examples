@@ -11,7 +11,7 @@ from user import UserIdentity
 def run_flow(event_file):
 
     fc = create_flows_client()
-    
+
     # TODO: Specify the flow to run when tiggered
     flow_id = 'REPLACE_WITH_FLOW_ID'
     flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
@@ -23,7 +23,7 @@ def run_flow(event_file):
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
     source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
-    
+
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
     # Default is "Globus Tutorials on ALCF Eagle"
@@ -36,15 +36,15 @@ def run_flow(event_file):
     # TODO: Modify identity/group ID to share with
     # Default is "Tutorial Users" group
     sharee_id = '50b6a29c-63ac-11e4-8062-22000ab68755'
-    
-    # TODO: Specify the search index to publish your metadata 
+
+    # TODO: Specify the search index to publish your metadata
     search_index = 'REPLACE_WITH_GLOBUS_SEARCH_INDEX_ID'
 
-    # Get the directory where the triggering file is stored and 
+    # Get the directory where the triggering file is stored and
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
-    source_path = os.path.join(event_folder, "") 
-        
+    source_path = os.path.join(event_folder, "")
+
     # Get name of monitored folder to use as destination path
     # and for setting permissions
     event_folder_name = os.path.basename(event_folder)
@@ -54,7 +54,7 @@ def run_flow(event_file):
 
     # Gather some information about the transfer to include in metadata
     file_names = glob.glob(source_path+'*')
-    
+
     # Use a helper-class to login, to get the user's Globus identity uuid.
     # This ID is used to set access control on search records in the flow below.
     user_identity = UserIdentity()
@@ -123,17 +123,17 @@ def parse_args():
     parser.add_argument('--patterns',
         type=str,
         default='',
-        nargs='*', 
+        nargs='*',
         help='Filename suffix pattern(s) that will trigger the flow. [default: ""]')
     parser.set_defaults(verbose=True)
-    
+
     return parser.parse_args()
 
 
 if __name__ == '__main__':
 
     args = parse_args()
-    
+
     # Creates and starts the watcher
     from watch import FileTrigger
     trigger = FileTrigger(

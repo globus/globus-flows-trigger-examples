@@ -15,7 +15,7 @@ The examples require the `globus_automate_client` and `watchdog` packages. They 
 You can deploy each flow by running `./deploy_flow --flowdef FLOW_DEFINITION_FILE --schema FLOW_INPUT_SCHEMA_FILE --title FLOW_TITLE`. For example, to deploy the transfer-and-share flow, run:
 
      ./deploy_flow.py --flowdef transfer_share_flow_definition.json --schema transfer_share_flow_schema.json --title "My Transfer and Share Flow Example"
- 
+
 ## Running the watcher to trigger a flow
 A separate watcher script is provided for triggering each flow. Each script must be modified to provide the required inputs to the flow, but all three scripts are run the same way, by specifying two arguments:
 

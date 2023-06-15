@@ -54,7 +54,7 @@ class Handler(FileSystemEventHandler):
         self.patterns = patterns
 
     # This is the callback function for file events.
-    # You can edit it to trigger at file creation, modification or deletion, 
+    # You can edit it to trigger at file creation, modification or deletion,
     # and have different behaviors for each.
     def on_any_event(self, event):
         if (event.event_type == 'created'):

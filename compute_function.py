@@ -1,5 +1,5 @@
 ''' The function below is used by the transfer-and-compute flow.
-In order to use it, you must first register it with the 
+In order to use it, you must first register it with the
 Globus Compute service, as described here:
 https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
 (code is also provided below).
@@ -15,13 +15,13 @@ def process_images(input_path=None, result_path=None):
     import os
     import glob
     from PIL import Image
-    
+
     files = (file for file in glob.glob(os.path.join(input_path,'*.png')) \
         if os.path.isfile(os.path.join(input_path, file)))
 
     if not os.path.exists(result_path):
         os.makedirs(result_path)
-    
+
     for file in files:
         image = Image.open(file)
 
@@ -46,12 +46,12 @@ def deploy_function():
 
     print(f"Registered function with ID {func_uuid}")
 
- 
+
 def main():
     deploy_function()
 
 
 if __name__ == "__main__":
     main()
- 
+
 ### EOF
