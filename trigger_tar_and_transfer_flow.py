@@ -61,7 +61,7 @@ def run_flow(event_file):
                 "inputs": tar_inputs,
                 "output": tar_output
             }
-        }
+        },
         "transfer": {
             "source_collection": source_id,
             "source_path": tar_output,
