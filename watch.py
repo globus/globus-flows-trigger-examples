@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 
 from watchdog.events import FileSystemEventHandler
@@ -68,3 +69,19 @@ class Handler(FileSystemEventHandler):
         # elif (event.event_type == 'modified'):
         #     self.logic_function(event.src_path)
         #     return None
+
+
+def translate_local_path_to_globus_path(local_path: str) -> str:
+    r"""Translate a local path to a Globus-compatible path.
+
+    On Windows, the local directory will be something like `C:\path\to\watch`.
+    This must be converted to /c/path/to/watch/ when referenced as a Globus path.
+    """
+
+    if not sys.platform.lower().startswith("win"):
+        return local_path
+
+    drive, _, path = local_path.partition(":")
+    drive = drive.lower()
+    path = path.replace("\\", "/").strip("/")
+    return f"/{drive}/{path}/"

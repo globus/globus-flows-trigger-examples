@@ -6,6 +6,8 @@ import os
 # This could go into a different file and be invoked without the file watcher
 from globus_automate_client import create_flows_client
 
+from watch import FileTrigger, translate_local_path_to_globus_path
+
 
 def run_flow(event_file):
     fc = create_flows_client()
@@ -30,10 +32,9 @@ def run_flow(event_file):
     # Update path to include your user name e.g. /automate-tutorial/dev1/
     destination_base_path = "/automation-tutorial/USERNAME/"
 
-    # Get the directory where the triggering file is stored and
-    # add trailing '/' to satisfy Transfer requirements for moving a directory
+    # Get the Globus-compatible directory name where the triggering file is stored.
     event_folder = os.path.dirname(event_file)
-    source_path = os.path.join(event_folder, "")
+    source_path = translate_local_path_to_globus_path(event_folder)
 
     # Get name of monitored folder to use as destination path
     # and for setting permissions
@@ -41,6 +42,8 @@ def run_flow(event_file):
 
     # Add a trailing '/' to meet Transfer requirements for directory transfer
     destination_path = os.path.join(destination_base_path, event_folder_name, "")
+    # Convert Windows path separators to forward slashes.
+    destination_path = destination_path.replace("\\", "/")
 
     # Inputs to the flow
     flow_input = {
@@ -96,8 +99,6 @@ if __name__ == "__main__":
     args = parse_args()
 
     # Creates and starts the watcher
-    from watch import FileTrigger
-
     trigger = FileTrigger(
         watch_dir=os.path.expanduser(args.watchdir),
         patterns=args.patterns,
