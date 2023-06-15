@@ -2,6 +2,7 @@
 
 import argparse
 
+
 # Parse input arguments
 def parse_args():
     parser = argparse.ArgumentParser(description='''
@@ -21,7 +22,9 @@ def parse_args():
 
 
 import json
+
 from globus_automate_client import create_flows_client
+
 
 def deploy_flow():
 

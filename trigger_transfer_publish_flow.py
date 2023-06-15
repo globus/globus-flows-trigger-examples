@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-import os
 import argparse
 import glob
+import os
 
 # This could go into a different file and be invoked without the file watcher
 from globus_automate_client import create_flows_client
+
 from user import UserIdentity
+
 
 def run_flow(event_file):
 

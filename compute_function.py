@@ -12,8 +12,9 @@ TUTORIAL_USERS_GROUP = '50b6a29c-63ac-11e4-8062-22000ab68755'
 
 def process_images(input_path=None, result_path=None):
 
-    import os
     import glob
+    import os
+
     from PIL import Image
 
     files = (file for file in glob.glob(os.path.join(input_path,'*.png')) \
@@ -36,6 +37,7 @@ def process_images(input_path=None, result_path=None):
 '''
 
 from globus_compute_sdk import Client
+
 
 def deploy_function():
     client = Client()
