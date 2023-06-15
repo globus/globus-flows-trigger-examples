@@ -1,39 +1,39 @@
 {
-  "StartAt": "Tar",
-  "States": {
-    "Tar": {
-      "Type": "Action",
-      "ActionUrl": "https://compute.actions.globus.org/fxap",
-      "Parameters": {
-        "tasks": [
-          {
-            "endpoint.$": "$.tar.funcx_endpoint",
-            "function.$": "$.tar.funcx_function",
-            "payload": {
-              "inputs.$": "$.tar.inputs",
-              "output.$": "$.tar.output"
-            }
-          }
-        ]
-      },
-      "ResultPath": "$.TarResult",
-      "Next": "Transfer"
-    },
-    "Transfer": {
-      "Type": "Action",
-      "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
-      "Parameters": {
-        "source_endpoint_id.$": "$.transfer.source_collection",
-        "destination_endpoint_id.$": "$.transfer.destination_collection",
-        "transfer_items": [
-          {
-            "source_path.$": "$.transfer.source_path",
-            "destination_path.$": "$.transfer.destination_path"
-          }
-        ]
-      },
-      "ResultPath": "$.TransferResult",
-      "End": true
+    "StartAt": "Tar",
+    "States": {
+        "Tar": {
+            "Type": "Action",
+            "ActionUrl": "https://compute.actions.globus.org/fxap",
+            "Parameters": {
+                "tasks": [
+                    {
+                        "endpoint.$": "$.tar.funcx_endpoint",
+                        "function.$": "$.tar.funcx_function",
+                        "payload": {
+                            "inputs.$": "$.tar.inputs",
+                            "output.$": "$.tar.output"
+                        }
+                    }
+                ]
+            },
+            "ResultPath": "$.TarResult",
+            "Next": "Transfer"
+        },
+        "Transfer": {
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.transfer.source_collection",
+                "destination_endpoint_id.$": "$.transfer.destination_collection",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.transfer.source_path",
+                        "destination_path.$": "$.transfer.destination_path"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferResult",
+            "End": true
+        }
     }
-  }
 }
