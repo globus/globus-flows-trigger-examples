@@ -10,7 +10,7 @@ from globus_automate_client import create_flows_client
 def run_flow(event_file):
     fc = create_flows_client()
 
-    # TODO: Specify the flow to run when tiggered
+    # TODO: Specify the flow to run when triggered
     flow_id = "REPLACE_WITH_FLOW_ID"
     flow_scope = fc.get_flow(flow_id).data["globus_auth_scope"]
 

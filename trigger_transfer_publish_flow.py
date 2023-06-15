@@ -13,7 +13,7 @@ from user import UserIdentity
 def run_flow(event_file):
     fc = create_flows_client()
 
-    # TODO: Specify the flow to run when tiggered
+    # TODO: Specify the flow to run when triggered
     flow_id = "REPLACE_WITH_FLOW_ID"
     flow_scope = fc.get_flow(flow_id).data["globus_auth_scope"]
 
@@ -63,7 +63,7 @@ def run_flow(event_file):
     # Inputs to the flow
     flow_input = {
         "input": {
-            # local endpoint where the event listner is running
+            # local endpoint where the event listener is running
             "source": {"id": source_id, "path": source_path},
             "destination": {"id": destination_id, "path": destination_path},
             "recursive_tx": True,
