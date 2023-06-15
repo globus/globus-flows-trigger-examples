@@ -1,5 +1,6 @@
 import globus_sdk
 
+
 class UserIdentity:
     def __init__(self):
         """

@@ -1,10 +1,11 @@
 import os
 import time
 
-from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
-class FileTrigger():
+
+class FileTrigger:
     def __init__(self, watch_dir, patterns, FlowRunner=None):
         self.observer = Observer()
         self.watch_dir = watch_dir
@@ -27,15 +28,8 @@ class FileTrigger():
         os.chdir(self.watch_dir)
         print(f"Monitoring: {self.watch_dir}\n")
 
-        event_handler = Handler(
-            self.FlowRunner,
-            self.patterns
-        )
-        self.observer.schedule(
-            event_handler,
-            self.watch_dir,
-            recursive = True
-        )
+        event_handler = Handler(self.FlowRunner, self.patterns)
+        self.observer.schedule(event_handler, self.watch_dir, recursive=True)
         self.observer.start()
 
         try:
@@ -47,6 +41,7 @@ class FileTrigger():
 
         self.observer.join()
 
+
 class Handler(FileSystemEventHandler):
     def __init__(self, FlowRunner, patterns):
         super(FileSystemEventHandler).__init__()
@@ -54,10 +49,10 @@ class Handler(FileSystemEventHandler):
         self.patterns = patterns
 
     # This is the callback function for file events.
-    # You can edit it to trigger at file creation, modification or deletion, 
+    # You can edit it to trigger at file creation, modification or deletion,
     # and have different behaviors for each.
     def on_any_event(self, event):
-        if (event.event_type == 'created'):
+        if event.event_type == "created":
             if event.is_directory:
                 # print("directory created")
                 # self.logic_function(event.src_path)

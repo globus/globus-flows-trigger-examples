@@ -7,7 +7,7 @@
             "Type": "Action",
             "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
             "Parameters": {
-                "source_endpoint_id.$": "$.input.source.id", 
+                "source_endpoint_id.$": "$.input.source.id",
                 "destination_endpoint_id.$": "$.input.destination.id",
                 "transfer_items": [
                     {
@@ -42,9 +42,9 @@
             "Type": "Action",
             "ActionUrl": "https://actions.globus.org/search/ingest",
             "Parameters": {
-                "search_index.$": "$.input.search_ingest_document.search_index",  
-                "subject.$": "$.input.search_ingest_document.search_subject",  
-                "visible_to.$": "$.input.search_ingest_document.search_visible_to",  
+                "search_index.$": "$.input.search_ingest_document.search_index",
+                "subject.$": "$.input.search_ingest_document.search_subject",
+                "visible_to.$": "$.input.search_ingest_document.search_visible_to",
                 "content.$": "$.input.search_ingest_document.search_content_metadata",
                 "id.$": "$.input.search_ingest_document.search_entry_id"
             },

@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
-import os
 import argparse
 import glob
+import os
 
 # This could go into a different file and be invoked without the file watcher
 from globus_automate_client import create_flows_client
+
 from user import UserIdentity
 
-def run_flow(event_file):
 
+def run_flow(event_file):
     fc = create_flows_client()
-    
+
     # TODO: Specify the flow to run when tiggered
-    flow_id = 'REPLACE_WITH_FLOW_ID'
-    flow_scope = fc.get_flow(flow_id).data['globus_auth_scope']
+    flow_id = "REPLACE_WITH_FLOW_ID"
+    flow_scope = fc.get_flow(flow_id).data["globus_auth_scope"]
 
     # TODO: Set a label for the flow run
     # Default includes the file name that triggered the run
@@ -22,29 +23,29 @@ def run_flow(event_file):
 
     # TODO: Modify source collection ID
     # Source collection must be on the endpoint where this trigger code is running
-    source_id = 'REPLACE_WITH_SOURCE_COLLECTION_ID'
-    
+    source_id = "REPLACE_WITH_SOURCE_COLLECTION_ID"
+
     # TODO: Modify destination collection ID
     # Destination must be a guest collection so permission can be set
     # Default is "Globus Tutorials on ALCF Eagle"
-    destination_id = 'a6f165fa-aee2-4fe5-95f3-97429c28bf82'
+    destination_id = "a6f165fa-aee2-4fe5-95f3-97429c28bf82"
 
     # TODO: Modify destination collection path
     # Update path to include your user name e.g. /automate-tutorial/dev1/
-    destination_base_path = '/automation-tutorial/USERNAME/'
+    destination_base_path = "/automation-tutorial/USERNAME/"
 
     # TODO: Modify identity/group ID to share with
     # Default is "Tutorial Users" group
-    sharee_id = '50b6a29c-63ac-11e4-8062-22000ab68755'
-    
-    # TODO: Specify the search index to publish your metadata 
-    search_index = 'REPLACE_WITH_GLOBUS_SEARCH_INDEX_ID'
+    sharee_id = "50b6a29c-63ac-11e4-8062-22000ab68755"
 
-    # Get the directory where the triggering file is stored and 
+    # TODO: Specify the search index to publish your metadata
+    search_index = "REPLACE_WITH_GLOBUS_SEARCH_INDEX_ID"
+
+    # Get the directory where the triggering file is stored and
     # add trailing '/' to satisfy Transfer requirements for moving a directory
     event_folder = os.path.dirname(event_file)
-    source_path = os.path.join(event_folder, "") 
-        
+    source_path = os.path.join(event_folder, "")
+
     # Get name of monitored folder to use as destination path
     # and for setting permissions
     event_folder_name = os.path.basename(event_folder)
@@ -53,28 +54,21 @@ def run_flow(event_file):
     destination_path = os.path.join(destination_base_path, event_folder_name, "")
 
     # Gather some information about the transfer to include in metadata
-    file_names = glob.glob(source_path+'*')
-    
+    file_names = glob.glob(source_path + "*")
+
     # Use a helper-class to login, to get the user's Globus identity uuid.
     # This ID is used to set access control on search records in the flow below.
     user_identity = UserIdentity()
 
     # Inputs to the flow
     flow_input = {
-        "input" : {
+        "input": {
             # local endpoint where the event listner is running
-            "source": {
-                "id": source_id,
-                "path": source_path
-            },
-            "destination": {
-                "id": destination_id,
-                "path": destination_path
-             },
+            "source": {"id": source_id, "path": source_path},
+            "destination": {"id": destination_id, "path": destination_path},
             "recursive_tx": True,
             "principal_type": "group",
             "principal_identifier": sharee_id,
-
             # Metadata to ingest into Globus Search index
             # TODO: Update "search_content_metadata" with your own
             "search_ingest_document": {
@@ -85,18 +79,18 @@ def run_flow(event_file):
                 "search_content_metadata": {
                     "title": event_folder_name,
                     "filecount": len(file_names),
-                    "filenames": file_names
+                    "filenames": file_names,
                 },
                 # Principal URNs look like urn:globus:auth:identity:GLOBUS_AUTH_IDENTITY_UUID
                 # Ref: https://docs.globus.org/api/search/overview/#principal_urns
                 "search_restricted_entry_id": "RES00001",
-                "search_restricted_visible_to" : [user_identity.principal_urn],
+                "search_restricted_visible_to": [user_identity.principal_urn],
                 "search_content_restricted_metadata": {
                     "secret": "Formula 20220730",
-                    "pathogen":"XLKFT-34895",
-                    "antidote": "Unavailable"
-                }
-            }
+                    "pathogen": "XLKFT-34895",
+                    "antidote": "Unavailable",
+                },
+            },
         }
     }
 
@@ -105,7 +99,7 @@ def run_flow(event_file):
         flow_scope=flow_scope,
         flow_input=flow_input,
         label=flow_label,
-        tags=['Trigger_Tutorial']
+        tags=["Trigger_Tutorial"],
     )
     print(f"Transferring and publishing: {event_folder_name}")
     print(f"Metadata published to search index: {search_index}")
@@ -114,31 +108,37 @@ def run_flow(event_file):
 
 # Parse input arguments
 def parse_args():
-    parser = argparse.ArgumentParser(description='''
-        Watch a directory and trigger a transfer-and-share flow.''')
-    parser.add_argument('--watchdir',
+    parser = argparse.ArgumentParser(
+        description="""
+        Watch a directory and trigger a transfer-and-share flow."""
+    )
+    parser.add_argument(
+        "--watchdir",
         type=str,
-        default=os.path.abspath('.'),
-        help=f'Directory path to watch. [default: current directory]')
-    parser.add_argument('--patterns',
+        default=os.path.abspath("."),
+        help=f"Directory path to watch. [default: current directory]",
+    )
+    parser.add_argument(
+        "--patterns",
         type=str,
-        default='',
-        nargs='*', 
-        help='Filename suffix pattern(s) that will trigger the flow. [default: ""]')
+        default="",
+        nargs="*",
+        help='Filename suffix pattern(s) that will trigger the flow. [default: ""]',
+    )
     parser.set_defaults(verbose=True)
-    
+
     return parser.parse_args()
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     args = parse_args()
-    
+
     # Creates and starts the watcher
     from watch import FileTrigger
+
     trigger = FileTrigger(
         watch_dir=os.path.expanduser(args.watchdir),
         patterns=args.patterns,
-        FlowRunner=run_flow
+        FlowRunner=run_flow,
     )
     trigger.run()

@@ -112,7 +112,9 @@
                         "search_visible_to": {
                             "type": "array",
                             "title": "Visible To",
-                            "default": ["public"],
+                            "default": [
+                                "public"
+                            ],
                             "description": "Globus user(s) or group(s) that can view this metadata"
                         },
                         "search_content_metadata": {
