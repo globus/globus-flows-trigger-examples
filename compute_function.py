@@ -1,4 +1,4 @@
-''' The function below is used by the transfer-and-compute flow.
+""" The function below is used by the transfer-and-compute flow.
 In order to use it, you must first register it with the
 Globus Compute service, as described here:
 https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
@@ -6,19 +6,22 @@ https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-func
 
 Before invoking the function, ensure that you have the Pillow library
 (https://python-pillow.org) installed on your Globus Compute endpoint.
-'''
+"""
 
-TUTORIAL_USERS_GROUP = '50b6a29c-63ac-11e4-8062-22000ab68755'
+TUTORIAL_USERS_GROUP = "50b6a29c-63ac-11e4-8062-22000ab68755"
+
 
 def process_images(input_path=None, result_path=None):
-
     import glob
     import os
 
     from PIL import Image
 
-    files = (file for file in glob.glob(os.path.join(input_path,'*.png')) \
-        if os.path.isfile(os.path.join(input_path, file)))
+    files = (
+        file
+        for file in glob.glob(os.path.join(input_path, "*.png"))
+        if os.path.isfile(os.path.join(input_path, file))
+    )
 
     if not os.path.exists(result_path):
         os.makedirs(result_path)
@@ -33,8 +36,8 @@ def process_images(input_path=None, result_path=None):
         image.save(f"{result_path}/thumb_{os.path.basename(file)}")
 
 
-'''Code to register the function with the Globus Compute service
-'''
+"""Code to register the function with the Globus Compute service
+"""
 
 from globus_compute_sdk import Client
 
