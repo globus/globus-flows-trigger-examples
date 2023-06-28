@@ -1,34 +1,34 @@
 {
-  "StartAt": "Tar",
-  "States": {
-    "Tar": {
-      "Comment": "Tar a list of files/directories using a Globus Compute function",
-      "Type": "Action",
-      "ActionUrl": "https://compute.actions.globus.org",
-      "Parameters": {
-          "endpoint.$": "$.tar.compute_endpoint_id",
-          "function.$": "$.tar.compute_function_id",
-          "kwargs.$": "$.tar.compute_function_kwargs"
-      },
-      "ResultPath": "$.TarResult",
-      "Next": "Transfer"
-    },
-    "Transfer": {
-      "Comment": "Transfer the tar archive",
-      "Type": "Action",
-      "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
-      "Parameters": {
-        "source_endpoint_id.$": "$.transfer.source_collection",
-        "destination_endpoint_id.$": "$.transfer.destination_collection",
-        "transfer_items": [
-          {
-            "source_path.$": "$.transfer.source_path",
-            "destination_path.$": "$.transfer.destination_path"
-          }
-        ]
-      },
-      "ResultPath": "$.TransferResult",
-      "End": true
+    "StartAt": "Tar",
+    "States": {
+        "Tar": {
+            "Comment": "Tar a list of files/directories using a Globus Compute function",
+            "Type": "Action",
+            "ActionUrl": "https://compute.actions.globus.org",
+            "Parameters": {
+                "endpoint.$": "$.tar.compute_endpoint_id",
+                "function.$": "$.tar.compute_function_id",
+                "kwargs.$": "$.tar.compute_function_kwargs"
+            },
+            "ResultPath": "$.TarResult",
+            "Next": "Transfer"
+        },
+        "Transfer": {
+            "Comment": "Transfer the tar archive",
+            "Type": "Action",
+            "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
+            "Parameters": {
+                "source_endpoint_id.$": "$.transfer.source_collection",
+                "destination_endpoint_id.$": "$.transfer.destination_collection",
+                "transfer_items": [
+                    {
+                        "source_path.$": "$.transfer.source_path",
+                        "destination_path.$": "$.transfer.destination_path"
+                    }
+                ]
+            },
+            "ResultPath": "$.TransferResult",
+            "End": true
+        }
     }
-  }
 }
