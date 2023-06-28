@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!python
 
 import argparse
 import glob
