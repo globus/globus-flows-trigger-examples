@@ -2,6 +2,7 @@
   "StartAt": "Tar",
   "States": {
     "Tar": {
+      "Comment": "Tar a list of files/directories using a Globus Compute function",
       "Type": "Action",
       "ActionUrl": "https://compute.actions.globus.org",
       "Parameters": {
@@ -13,6 +14,7 @@
       "Next": "Transfer"
     },
     "Transfer": {
+      "Comment": "Transfer the tar archive",
       "Type": "Action",
       "ActionUrl": "https://actions.automate.globus.org/transfer/transfer",
       "Parameters": {
