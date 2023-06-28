@@ -1,19 +1,20 @@
 """ The function below is used by the transfer-and-compute flow.
-In order to use it, you must first register it with the 
+In order to use it, you must first register it with the
 Globus Compute service, as described here:
 https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
 (code is also provided below).
 
 This function generates thumbnail images for all PNG files in the
-input_path and places them in result_path. Before invoking the function, 
-ensure that you have the Pillow library (https://python-pillow.org) 
+input_path and places them in result_path. Before invoking the function,
+ensure that you have the Pillow library (https://python-pillow.org)
 installed on your Globus Compute endpoint.
 """
 
 
 def process_images(input_path=None, result_path=None):
-    import os
     import glob
+    import os
+
     from PIL import Image
 
     files = (

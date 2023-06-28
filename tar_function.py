@@ -1,12 +1,12 @@
 """ The function below is used by the tar-and-transfer flow.
-In order to use it, you must first register it with the 
+In order to use it, you must first register it with the
 Globus Compute service, as described here:
 https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
 (code is also provided below).
 
-This function uses the tarfile module, which is part of the standard 
-Python library (it also assumes the gzip module is available). It accepts a 
-list of files/paths (as strings) and the name of the resulting archive file. 
+This function uses the tarfile module, which is part of the standard
+Python library (it also assumes the gzip module is available). It accepts a
+list of files/paths (as strings) and the name of the resulting archive file.
 'inputs' is a list of absolute paths and 'output' is the absolute path to
 the resulting archive file.
 """
