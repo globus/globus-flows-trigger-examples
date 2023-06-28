@@ -24,7 +24,7 @@
         "ProcessFiles": {
             "Comment": "Process files - generate thumbnails",
             "Type": "Action",
-            "ActionUrl": "https://compute.actions.globus.org/fxap",
+            "ActionUrl": "https://compute.actions.globus.org",
             "Parameters": {
                 "endpoint.$": "$.input.compute_endpoint_id",
                 "function.$": "$.input.compute_function_id",
