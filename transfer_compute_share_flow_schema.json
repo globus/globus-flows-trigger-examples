@@ -67,17 +67,13 @@
                     "type": "string",
                     "format": "uuid",
                     "title": "Globus Compute Endpoint ID",
-                    "description": "The UUID of the funcX endpoint where the function will run.",
-                    "properties": {},
-                    "additionalProperties": false
+                    "description": "The UUID of the Globus Compute endpoint where the function will run."
                 },
                 "compute_function_id": {
                     "type": "string",
                     "format": "uuid",
                     "title": "Globus Compute Function ID",
-                    "description": "The UUID of the function to invoke; must be registered with the Globus Compute service.",
-                    "properties": {},
-                    "additionalProperties": false
+                    "description": "The UUID of the function to invoke; must be registered with the Globus Compute service."
                 },
                 "compute_function_kwargs": {
                     "type": "object",
