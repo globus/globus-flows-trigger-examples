@@ -9,8 +9,7 @@
                 "source",
                 "destination",
                 "recursive_tx",
-                "principal_identifier",
-                "principal_type"
+                "principal"
             ],
             "properties": {
                 "source": {
@@ -31,6 +30,10 @@
                             "type": "string"
                         }
                     },
+                    "propertyOrder": [
+                        "id",
+                        "path"
+                    ],
                     "additionalProperties": false
                 },
                 "destination": {
@@ -53,6 +56,10 @@
                             "default": "/automation-tutorial/USERNAME/"
                         }
                     },
+                    "propertyOrder": [
+                        "id",
+                        "path"
+                    ],
                     "additionalProperties": false
                 },
                 "recursive_tx": {
@@ -61,26 +68,24 @@
                     "description": "Whether or not to transfer recursively, must be true when transferring a directory.",
                     "default": true
                 },
-                "principal_type": {
-                    "type": "string",
-                    "title": "Type of principal to share with",
-                    "description": "Specifies whether files are being shared with a user ('identity') or a group ('group'); default is 'group'",
-                    "enum": [
-                        "identity",
-                        "group"
-                    ],
-                    "default": "group"
-                },
-                "principal_identifier": {
-                    "type": "string",
-                    "title": "UUID of user identity or group",
-                    "description": "The user or group id to share with; default is 'Tutorial Users' group.",
-                    "format": "uuid",
-                    "default": "50b6a29c-63ac-11e4-8062-22000ab68755"
+                "principal": {
+                    "type": "object",
+                    "title": "Select a sharee (an individual, group or application)",
+                    "format": "globus-principal",
+                    "description": "Select group/identity to share with (currently only works with a single sharee)."
                 }
             },
+            "propertyOrder": [
+                "source",
+                "destination",
+                "recursive_tx",
+                "principal"
+            ],
             "additionalProperties": false
         }
     },
+    "propertyOrder": [
+        "input"
+    ],
     "additionalProperties": false
 }

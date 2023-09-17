@@ -30,8 +30,8 @@
                 "path.$": "$.input.destination.path",
                 "operation": "CREATE",
                 "permissions": "r",
-                "principal_type.$": "$.input.principal_type",
-                "principal.$": "$.input.principal_identifier"
+                "principal_type.$": "$.input.principal.type",
+                "principal.$": "$.input.principal.id"
             },
             "ResultPath": "$.SetPermission",
             "End": true

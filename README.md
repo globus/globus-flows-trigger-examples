@@ -1,23 +1,32 @@
 # Examples of Triggers for Globus Flows
 
-We provide three examples of triggering flows:
+We provide examples of triggering flows with the following actions:
 
-* We start with a single-action flow that transfers data (as defined in [`transfer_flow_definition.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/transfer_flow_definition.json))
-* Next we add an action that sets permissions for sharing the data (as defined in [`transfer_share_flow_definition.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/transfer_share_flow_definition.json))
-* And then we add an action that ingests metadata into a Globus Search index (as defined in [`transfer_publish_flow_definition.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/transfer_publish_flow_definition.json))
+* [Tar and Transfer](https://github.com/globus/globus-flows-trigger-examples/tar_transfer): A flow that creates a tar archive (using Globus Compute) and transfers the resulting tar file to the destination collection.
+* [Transfer](https://github.com/globus/globus-flows-trigger-examples/transfer): A single-action flow that transfers data.
+* [Transfer and Compute](https://github.com/globus/globus-flows-trigger-examples/transfer_compute): A flow that transfers data and invokes a Globus Compute function on the destination collection to process the transferred files.
+* [Transfer, Compute and Share](https://github.com/globus/globus-flows-trigger-examples/transfer_compute_share): A flow that transfers data, invokes a Globus Compute function on the destination collection to process the transferred files, transfers the processed files to another collection, and sets permissions for sharing the data.
+* [Transfer and Publish](https://github.com/globus/globus-flows-trigger-examples/transfer_publish): A flow that transfers data, sets permissions for accessing the data, and ingests metadata (both fully accessible and restricted) into a Globus Search index.
+* [Transfer and Share](https://github.com/globus/globus-flows-trigger-examples/transfer_share): A flow that transfers data and sets permissions for sharing the data.
+
+Each folder contains three files:
+
+* definition.json - the flow definition
+* schema.json - the flow input schema
+* trigger_*.py - a Python script that will trigger the flow
 
 ## Installation
-The examples require the `globus_automate_client` and `watchdog` packages. They can be installed by creating a Python virtual environment and running:
+The examples require the `globus_sdk` and `watchdog` packages. They can be installed by creating a Python virtual environment and running:
 
      pip install -r requirements.txt
 
 ## Deploying the flows
 You can deploy each flow by running `./deploy_flow --flowdef FLOW_DEFINITION_FILE --schema FLOW_INPUT_SCHEMA_FILE --title FLOW_TITLE`. For example, to deploy the transfer-and-share flow, run:
 
-     ./deploy_flow.py --flowdef transfer_share_flow_definition.json --schema transfer_share_flow_schema.json --title "My Transfer and Share Flow Example"
+     ./deploy_flow.py --flowdef transfer_share/definition.json --schema transfer_share/schema.json --title "My Transfer and Share Flow Example"
 
 ## Running the watcher to trigger a flow
-A separate watcher script is provided for triggering each flow. Each script must be modified to provide the required inputs to the flow, but all three scripts are run the same way, by specifying two arguments:
+A separate watcher script is provided for triggering each flow. The trigger script must be modified before running, by defining values for the flow ID, collection ID and other variables (varies by script). Look for placeholders like `"REPLACE_WTIH_...` and provide values for each before running the trigger script. All trigger scripts are run by specifying two arguments:
 
 1. `--watchdir` specifies the directory path to watch
 1. `--patterns` specifies the file suffix pattern(s) to watch for (this can be a list of multiple suffixes, separated by spaces).
@@ -32,13 +41,12 @@ The trigger logic can be modified by editing the `Handler` class in `watch.py`. 
 ## Modifying a deployed flow
 A deployed flow may be updated by running:
 
-     ./deploy_flow.py --flowid <FLOW_ID> --flowdef <UPDATED_FLOW_DEFINITION> --schema <UPDATED_FLOW_INPUT_SCHEMA> --title <UPDATED_FLOW_TITLE>
+     ./deploy_flow.py --flowid FLOW_ID --flowdef UPDATED_FLOW_DEFINITION_FILE --schema UPDATED_FLOW_INPUT_SCHEMA_FILE --title UPDATED_FLOW_TITLE
 
-Note: This is just a convenience extension for these examples, and is limited to updating only the flow/schema definition and/or flow title; refer to the [Globus Flows API](https://globusonline.github.io/flows/) reference for the full-featured `PUT`.
+Note: This is just a convenience extension for these examples, and is limited to updating only the flow/schema definition and/or flow title; refer to the [Globus Flows API](https://globusonline.github.io/globus-flows/) reference for the full-featured `PUT`.
 
-## From the future
-Also included in this repository are two flows that introduce the use of [funcX](https://funcx.org). _Please note that funcX is currently in development, and is not a production Globus service (although it's already used extensively at some large facilities), hence the "future"_.
+## Flows including compute actions
+Some of the flows include a compute action that uses the [Globus Compute service](https://globus-compute.readthedocs.io/en/latest/index.html). In order for these flows to succeed you must first create a Globus Compute endpoint and ensure that the compute endpoint has a Python environment with any required packages already installed. You must also register the function to run in the compute step with the Globus Compute service; we provide two scripts for deploying the required Globus Compute functions:
 
-[`transfer_compute_flow_definition.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/transfer_compute_flow_definition.json) defines a flow that transfers files and then runs a function to process them. It's intended as a simple illustration of a very common pattern: move data to a compute resource and run a job to process the data. [`transfer_compute_share_flow_definition.json`](https://github.com/globus/globus-flows-trigger-examples/blob/main/transfer_compute_share_flow_definition.json) extends this flow by adding a subsequent transfer to a guest collection and setting permissions for sharing.
-
-The corresponding trigger code assumes you have registered a funcX endpoint and a Python function with the funcX service (see the [funcX tutorial](https://funcx.readthedocs.io/en/latest/Tutorial.html) for a quick overview). [`compute_function.py`](https://github.com/globus/globus-flows-trigger-examples/blob/main/compute_function.py) is an example of such a function; it generates thumbnails for all files in `input_path` and saves them in `results_path`. Feel free to replace it with your own (more useful!) function.
+* [compute_function.py](https://github.com/globus/globus-flows-trigger-examples/functions/blob/main/compute_function.py) - contains a simple image manipulation function that creates thumbnail images for any `.png` and `.jpg` files transferred by the flow. The compute endpoint environment for running this function must include the [`Pillow` package](https://pillow.readthedocs.io/en/stable/). This function is used in the [transfer_compute](https://github.com/globus/globus-flows-trigger-examples/transfer_compute) and [transfer_compute_share](https://github.com/globus/globus-flows-trigger-examples/transfer_compute_share) flows.
+* [tar_function.py](https://github.com/globus/globus-flows-trigger-examples/functions/blob/main/tar_function.py) - contains a function for archiving all files in the specified directory to a tar file, which will then be transferred by the flow. The compute endpoint environment for running this function must include the [`tarfile` package](https://docs.python.org/3/library/tarfile.html). This function is used in the  [tar_transfer](https://github.com/globus/globus-flows-trigger-examples/tar_transfer) flow.

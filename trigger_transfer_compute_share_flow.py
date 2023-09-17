@@ -4,7 +4,7 @@ import argparse
 import os
 
 # This could go into a different file and be invoked without the file watcher
-from globus_automate_client import create_flows_client
+from flows_service import create_flows_client
 
 
 def run_flow(event_file):
@@ -83,8 +83,10 @@ def run_flow(event_file):
                 "id": resultshare_id,
                 "path": resultshare_path,
             },
-            "principal_type": "group",
-            "principal_identifier": sharee_id,
+            "principal": {
+                "type": "group",
+                "id": sharee_id,
+            },
         }
     }
 

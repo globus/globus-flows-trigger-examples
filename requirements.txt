@@ -1,2 +1,2 @@
-globus_automate_client
+globus_sdk
 watchdog

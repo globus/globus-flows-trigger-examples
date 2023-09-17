@@ -34,7 +34,7 @@ def parse_args():
 
 import json
 
-from globus_automate_client import create_flows_client
+from flows_service import create_flows_client
 
 
 def deploy_flow():
@@ -53,17 +53,17 @@ def deploy_flow():
         flow_id = args.flowid
         flow = fc.update_flow(
             flow_id=flow_id,
-            flow_definition=json.loads(flow_def),
             title=args.title,
+            definition=json.loads(flow_def),
             input_schema=json.loads(schema),
         )
         print(f"Updated flow {flow_id}")
 
     else:
         # Deploy a new flow
-        flow = fc.deploy_flow(
-            flow_definition=json.loads(flow_def),
+        flow = fc.create_flow(
             title=args.title,
+            definition=json.loads(flow_def),
             input_schema=json.loads(schema),
         )
         flow_id = flow["id"]
