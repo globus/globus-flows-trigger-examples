@@ -30,10 +30,10 @@ CLIENT_ID = "61338d24-54d5-408f-a10d-66c06b59f6d2"  # tutorial client ID
 NATIVE_CLIENT = globus_sdk.NativeAppAuthClient(CLIENT_ID)
 
 
-def get_tokens():
+def get_tokens(scopes=None):
     # Initiate login flow
     NATIVE_CLIENT.oauth2_start_flow(
-        requested_scopes=SERVICE_SCOPES, refresh_tokens=True
+        requested_scopes=scopes, refresh_tokens=True
     )
     authorize_url = NATIVE_CLIENT.oauth2_get_authorize_url()
     print(f"Log in at this URL and get authorization code:\n\n{authorize_url}\n")
@@ -46,22 +46,24 @@ def get_tokens():
 
 def get_authorizer(flow_id=None):
     if flow_id:
-        scopes = SERVICE_SCOPES.append(globus_sdk.SpecificFlowClient(flow_id).scopes)
+        scopes = globus_sdk.SpecificFlowClient(flow_id).scopes.user
+        resource_server = flow_id
     else:
         scopes = SERVICE_SCOPES
+        resource_server = RESOURCE_SERVER
 
     # Try to load saved tokens
     if TOKEN_FILE_ADAPTER.file_exists():
-        tokens = TOKEN_FILE_ADAPTER.get_token_data(RESOURCE_SERVER)
+        tokens = TOKEN_FILE_ADAPTER.get_token_data(resource_server)
     else:
         tokens = None
 
     if tokens is None:
         # Log into Globus Auth and get tokens
-        response = get_tokens()
+        response = get_tokens(scopes=scopes)
         # Store tokens and extract token for Globus Flows service
         TOKEN_FILE_ADAPTER.store(response)
-        tokens = response.by_resource_server[RESOURCE_SERVER]
+        tokens = response.by_resource_server[resource_server]
 
     return globus_sdk.RefreshTokenAuthorizer(
         tokens["refresh_token"],
@@ -72,20 +74,13 @@ def get_authorizer(flow_id=None):
     )
 
 
-def create_flows_client():
-    return globus_sdk.FlowsClient(authorizer=get_authorizer())
-
-
-"""
-def delete_flow(args):
-    flows_client = get_flows_client()
-    print(flows_client.delete_flow(args.flow_id))
-
-
-def list_flows():
-    flows_client = get_flows_client()
-    for flow in flows_client.list_flows(filter_role="flow_owner"):
-        print(f"title: {flow['title']}")
-        print(f"id: {flow['id']}")
-        print()
-"""
+def create_flows_client(flow_id=None):
+    if flow_id:
+        return globus_sdk.SpecificFlowClient(
+            flow_id, 
+            authorizer=get_authorizer(flow_id=flow_id)
+        )
+    else:
+        return globus_sdk.FlowsClient(
+            authorizer=get_authorizer()
+        )

@@ -11,11 +11,10 @@ from user import UserIdentity
 
 
 def run_flow(event_file):
-    fc = create_flows_client()
 
     # TODO: Specify the flow to run when triggered
     flow_id = "REPLACE_WITH_FLOW_ID"
-    flow_scope = fc.get_flow(flow_id).data["globus_auth_scope"]
+    fc = create_flows_client(flow_id=flow_id)
 
     # TODO: Set a label for the flow run
     # Default includes the file name that triggered the run
@@ -67,8 +66,10 @@ def run_flow(event_file):
             "source": {"id": source_id, "path": source_path},
             "destination": {"id": destination_id, "path": destination_path},
             "recursive_tx": True,
-            "principal_type": "group",
-            "principal_identifier": sharee_id,
+            "principal": {
+                "type": "group",
+                "id": sharee_id,
+            },
             # Metadata to ingest into Globus Search index
             # TODO: Update "search_content_metadata" with your own
             "search_ingest_document": {
@@ -95,9 +96,7 @@ def run_flow(event_file):
     }
 
     flow_run_request = fc.run_flow(
-        flow_id=flow_id,
-        flow_scope=flow_scope,
-        flow_input=flow_input,
+        body=flow_input,
         label=flow_label,
         tags=["Trigger_Tutorial"],
     )
