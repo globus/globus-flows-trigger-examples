@@ -8,7 +8,6 @@ from flows_service import create_flows_client
 
 
 def run_flow(event_file):
-
     # TODO: Specify the flow to run when triggered
     flow_id = "REPLACE_WTIH_FLOW_ID"
     fc = create_flows_client(flow_id=flow_id)

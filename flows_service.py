@@ -32,9 +32,7 @@ NATIVE_CLIENT = globus_sdk.NativeAppAuthClient(CLIENT_ID)
 
 def get_tokens(scopes=None):
     # Initiate login flow
-    NATIVE_CLIENT.oauth2_start_flow(
-        requested_scopes=scopes, refresh_tokens=True
-    )
+    NATIVE_CLIENT.oauth2_start_flow(requested_scopes=scopes, refresh_tokens=True)
     authorize_url = NATIVE_CLIENT.oauth2_get_authorize_url()
     print(f"Log in at this URL and get authorization code:\n\n{authorize_url}\n")
     auth_code = input("Enter authorization code here: ").strip()
@@ -77,10 +75,7 @@ def get_authorizer(flow_id=None):
 def create_flows_client(flow_id=None):
     if flow_id:
         return globus_sdk.SpecificFlowClient(
-            flow_id, 
-            authorizer=get_authorizer(flow_id=flow_id)
+            flow_id, authorizer=get_authorizer(flow_id=flow_id)
         )
     else:
-        return globus_sdk.FlowsClient(
-            authorizer=get_authorizer()
-        )
+        return globus_sdk.FlowsClient(authorizer=get_authorizer())
