@@ -1,7 +1,7 @@
 """ The function below is used by the tar-and-transfer flow.
 In order to use it, you must first register it with the
 Globus Compute service, as described here:
-https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
+https://globus-compute.readthedocs.io/en/latest/sdk.html#registering-functions
 (code is also provided below).
 
 This function uses the tarfile module, which is part of the standard

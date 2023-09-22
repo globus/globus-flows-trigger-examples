@@ -5,12 +5,10 @@ import os
 
 # This could go into a different file and be invoked without the file watcher
 from flows_service import create_flows_client
-
 from watch import FileTrigger, translate_local_path_to_globus_path
 
 
 def run_flow(event_file):
-
     # TODO: Specify the flow to run when triggered
     flow_id = "REPLACE_WITH_FLOW_ID"
     fc = create_flows_client(flow_id=flow_id)
