@@ -20,10 +20,12 @@ The examples require the `globus_sdk` and `watchdog` packages. They can be insta
 
      pip install -r requirements.txt
 
-## Deploying the flows
-You can deploy each flow by running `./deploy_flow --flowdef FLOW_DEFINITION_FILE --schema FLOW_INPUT_SCHEMA_FILE --title FLOW_TITLE`. For example, to deploy the transfer-and-share flow, run:
+You will also need the Globus CLI to create and update your flow. Installation instructions can be found [here](https://docs.globus.org/cli/).
 
-     ./deploy_flow.py --flowdef transfer_share/definition.json --schema transfer_share/schema.json --title "My Transfer and Share Flow Example"
+## Deploying the flows
+You can deploy each flow by running `globus flows create FLOW_TITLE FLOW_DEFINITION_FILE --input-schema FLOW_INPUT_SCHEMA_FILE`. For example, to deploy the transfer-and-share flow, run:
+
+     globus flows create "My Transfer and Share Flow Example" transfer_share/definition.json --input-schema transfer_share/schema.json
 
 ## Running the watcher to trigger a flow
 A separate watcher script is provided for triggering each flow. The trigger script must be modified before running, by defining values for the flow ID, collection ID and other variables (varies by script). Look for placeholders like `"REPLACE_WTIH_...` and provide values for each before running the trigger script. All trigger scripts are run by specifying two arguments:
@@ -41,7 +43,7 @@ The trigger logic can be modified by editing the `Handler` class in `watch.py`. 
 ## Modifying a deployed flow
 A deployed flow may be updated by running:
 
-     ./deploy_flow.py --flowid FLOW_ID --flowdef UPDATED_FLOW_DEFINITION_FILE --schema UPDATED_FLOW_INPUT_SCHEMA_FILE --title UPDATED_FLOW_TITLE
+     globus flows update FLOW_ID --definition UPDATED_FLOW_DEFINITION_FILE --input-schema UPDATED_FLOW_INPUT_SCHEMA_FILE --title UPDATED_FLOW_TITLE
 
 Note: This is just a convenience extension for these examples, and is limited to updating only the flow/schema definition and/or flow title; refer to the [Globus Flows API](https://globusonline.github.io/globus-flows/) reference for the full-featured `PUT`.
 
