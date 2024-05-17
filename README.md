@@ -8,6 +8,10 @@ We provide examples of triggering flows with the following actions:
 * [Transfer, Compute and Share](https://github.com/globus/globus-flows-trigger-examples/tree/main/transfer_compute_share): A flow that transfers data, invokes a Globus Compute function on the destination collection to process the transferred files, transfers the processed files to another collection, and sets permissions for sharing the data.
 * [Transfer and Publish](https://github.com/globus/globus-flows-trigger-examples/tree/main/transfer_publish): A flow that transfers data, sets permissions for accessing the data, and ingests metadata (both fully accessible and restricted) into a Globus Search index.
 * [Transfer and Share](https://github.com/globus/globus-flows-trigger-examples/tree/main/transfer_share): A flow that transfers data and sets permissions for sharing the data.
+* [Looping batched transfer and delete](https://github.com/globus/globus-flows-trigger-examples/tree/main/looping-batched-transfer-and-delete):
+  A flow similar to the Globus-provided "Move (Copy and Delete)" flow
+  which transfers batches of files and subdirectories source path, then deletes them.
+  Demonstrates a form of while-loop-style looping in a flow.
 
 Each folder contains three files:
 

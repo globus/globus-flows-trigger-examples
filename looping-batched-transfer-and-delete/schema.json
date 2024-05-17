@@ -1,0 +1,93 @@
+{
+    "type": "object",
+    "required": [
+        "source",
+        "destination"
+    ],
+    "properties": {
+        "source": {
+            "type": "object",
+            "title": "Source",
+            "format": "globus-collection",
+            "required": [
+                "id",
+                "path"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "title": "Source Collection ID",
+                    "format": "uuid",
+                    "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    "maxLength": 36,
+                    "minLength": 36,
+                    "description": "The UUID for the collection which serves as the source of the Move"
+                },
+                "path": {
+                    "type": "string",
+                    "title": "Source Collection Path",
+                    "description": "The path on the source collection for the data"
+                }
+            },
+            "propertyOrder": [
+                "id",
+                "path"
+            ],
+            "additionalProperties": false
+        },
+        "destination": {
+            "description": "NOTE! The *contents* of the source directory will be transferred to the directory selected here!",
+            "type": "object",
+            "title": "Destination",
+            "format": "globus-collection",
+            "required": [
+                "id",
+                "path"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "title": "Destination Collection ID",
+                    "format": "uuid",
+                    "pattern": "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}",
+                    "maxLength": 36,
+                    "minLength": 36,
+                    "description": "The UUID for the collection which serves as the destination for the Move"
+                },
+                "path": {
+                    "type": "string",
+                    "title": "Destination Collection Path",
+                    "description": "The path on the destination collection where the data will be stored"
+                }
+            },
+            "propertyOrder": [
+                "id",
+                "path"
+            ],
+            "additionalProperties": false
+        },
+        "transfer_label": {
+            "type": "string",
+            "title": "Label for Transfer Task",
+            "pattern": "^[a-zA-Z0-9-_, ]{0,128}$",
+            "maxLength": 128,
+            "minLength": 0,
+            "description": "The label to assign to Transfer operations"
+        },
+        "delete_label": {
+            "type": "string",
+            "title": "Label for Delete Task from Source",
+            "pattern": "^[a-zA-Z0-9-_, ]{0,128}$",
+            "maxLength": 128,
+            "minLength": 0,
+            "description": "The label to assign to the Delete operations"
+        }
+    },
+    "propertyOrder": [
+        "source",
+        "destination",
+        "transfer_label",
+        "delete_label"
+    ],
+    "additionalProperties": false
+}
