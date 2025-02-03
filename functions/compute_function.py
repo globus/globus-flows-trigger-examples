@@ -1,4 +1,4 @@
-""" The function below is used by the transfer-and-compute flow.
+"""The function below is used by the transfer-and-compute flow.
 In order to use it, you must first register it with the
 Globus Compute service, as described here:
 https://globus-compute.readthedocs.io/en/latest/Tutorial.html#registering-a-function
