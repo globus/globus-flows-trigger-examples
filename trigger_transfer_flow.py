@@ -68,10 +68,8 @@ def run_flow(event_file):
 
 # Parse input arguments
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="""
-        Watch a directory and trigger a simple transfer flow."""
-    )
+    parser = argparse.ArgumentParser(description="""
+        Watch a directory and trigger a simple transfer flow.""")
     parser.add_argument(
         "--watchdir",
         type=str,

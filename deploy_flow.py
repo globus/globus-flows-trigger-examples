@@ -5,10 +5,8 @@ import argparse
 
 # Parse input arguments
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="""
-        Deploy a flow for use with trigger examples."""
-    )
+    parser = argparse.ArgumentParser(description="""
+        Deploy a flow for use with trigger examples.""")
     parser.add_argument(
         "--flowdef",
         required=True,
