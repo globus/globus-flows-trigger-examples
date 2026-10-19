@@ -101,10 +101,8 @@ def run_flow(event_file):
 
 # Parse input arguments
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="""
-        Run a compute job/task using Globus Compute and share results"""
-    )
+    parser = argparse.ArgumentParser(description="""
+        Run a compute job/task using Globus Compute and share results""")
     parser.add_argument(
         "--watchdir",
         type=str,
